@@ -1,725 +1,661 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI工具箱 - 建站·生图·部署，AI帮你搞定</title>
-    <meta name="description" content="用AI做网站、AI生图、部署教程。魔法消耗制，按需付费，丰俭由人。" />
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        html { scroll-behavior:smooth; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #08080e;
-            color: #e8e8ed;
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>✨ AI 魔法工坊 — 生图·生视频·建站</title>
+<meta name="description" content="AI工具平台，魔法消耗制。AI生图、AI生视频、AI建站，全部消耗魔法。开月卡，够用就好。" />
+<style>
+:root {
+  --bg: #0b0b14;
+  --surface: #12121e;
+  --surface2: #1a1a2e;
+  --border: rgba(255,255,255,0.06);
+  --text: #e8e8ed;
+  --muted: #6b7280;
+  --accent: #a855f7;
+  --accent2: #38bdf8;
+  --gold: #f59e0b;
+  --green: #34d399;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;
+  overflow-x:hidden;
+}
 
-        .parallax-layer {
-            position: fixed; top:0; left:0; right:0; bottom:0;
-            z-index: -1;
-            pointer-events: none;
-        }
-        .parallax-layer .bg-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.12;
-        }
-        .parallax-layer .bg-orb:nth-child(1) {
-            width: 600px; height: 600px;
-            background: linear-gradient(135deg, #a855f7, #6366f1);
-            top: -200px; left: -200px;
-        }
-        .parallax-layer .bg-orb:nth-child(2) {
-            width: 500px; height: 500px;
-            background: linear-gradient(135deg, #38bdf8, #06b6d4);
-            top: 40%; right: -150px;
-        }
-        .parallax-layer .bg-orb:nth-child(3) {
-            width: 400px; height: 400px;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            bottom: -100px; left: 30%;
-        }
-        .parallax-layer .bg-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(168,85,247,0.2);border-radius:3px;}
 
-        .container { max-width: 960px; margin:0 auto; padding:0 20px; }
+/* ===== Glass BG ===== */
+.bg-layer{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
+}
+.bg-layer .orb{
+  position:absolute;border-radius:50%;filter:blur(120px);opacity:0.1;
+}
+.bg-layer .orb:nth-child(1){
+  width:500px;height:500px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  top:-150px;left:-100px;
+}
+.bg-layer .orb:nth-child(2){
+  width:400px;height:400px;
+  background:linear-gradient(135deg,var(--accent2),var(--green));
+  top:35%;right:-100px;
+}
+.bg-layer .orb:nth-child(3){
+  width:350px;height:350px;
+  background:linear-gradient(135deg,var(--gold),#f97316);
+  bottom:-80px;left:25%;
+}
+.bg-layer .grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);
+  background-size:50px 50px;
+}
 
-        nav {
-            position:fixed; top:0; left:0; right:0; z-index:100;
-            background: rgba(8,8,14,0.8); backdrop-filter:blur(14px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            height: 56px; display:flex; align-items:center;
-        }
-        nav .container { display:flex; justify-content:space-between; align-items:center; width:100%; }
-        .logo {
-            font-size:1.2rem; font-weight:700;
-            background:linear-gradient(90deg,#a855f7,#38bdf8);
-            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-        }
-        .nav-toggle { display:none; background:none; border:none; color:#e8e8ed; font-size:1.4rem; cursor:pointer; }
-        nav .links { display:flex; gap:24px; align-items:center; }
-        nav .links a {
-            color:#94a3b8; text-decoration:none; font-size:.88rem; transition:color .2s;
-        }
-        nav .links a:hover { color:#e8e8ed; }
-        nav .links .btn-sm {
-            background:linear-gradient(90deg,#a855f7,#38bdf8); color:#fff;
-            padding:7px 18px; border-radius:6px; font-weight:600; font-size:.82rem;
-        }
+/* ===== Container ===== */
+.w{max-width:1100px;margin:0 auto;padding:0 20px;}
 
-        .hero {
-            min-height: 85vh;
-            display:flex; align-items:center; justify-content:center;
-            text-align:center;
-            padding: 100px 0 60px;
-        }
-        .hero h1 {
-            font-size: 3rem; font-weight:800; line-height:1.2;
-            max-width:700px; margin:0 auto 14px;
-        }
-        .hero h1 span {
-            background:linear-gradient(135deg,#a855f7,#38bdf8);
-            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-        }
-        .hero h1 .sparkle { background:linear-gradient(135deg,#f59e0b,#f97316); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .hero p {
-            font-size:1.1rem; color:#94a3b8;
-            max-width:520px; margin:0 auto 28px;
-        }
-        .hero .btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
-        .btn-primary {
-            background:linear-gradient(90deg,#a855f7,#38bdf8); color:#fff;
-            padding:13px 32px; border-radius:8px; text-decoration:none;
-            font-weight:600; font-size:.95rem; display:inline-block;
-            transition:opacity .2s,transform .15s; border:none; cursor:pointer;
-        }
-        .btn-primary:hover { opacity:.9; transform:translateY(-1px); }
-        .btn-outline {
-            border:1px solid rgba(255,255,255,.12); color:#e8e8ed;
-            padding:13px 32px; border-radius:8px; text-decoration:none;
-            font-weight:600; font-size:.95rem; display:inline-block;
-            transition:border-color .2s;
-        }
-        .btn-outline:hover { border-color:rgba(168,85,247,.4); }
-        .btn-green {
-            background:linear-gradient(90deg,#34d399,#10b981); color:#fff;
-            padding:13px 32px; border-radius:8px; text-decoration:none;
-            font-weight:600; font-size:.95rem; display:inline-block;
-            transition:opacity .2s,transform .15s;
-        }
-        .btn-green:hover { opacity:.9; transform:translateY(-1px); }
-        .btn-amber {
-            background:linear-gradient(90deg,#f59e0b,#d97706); color:#fff;
-            padding:13px 32px; border-radius:8px; text-decoration:none;
-            font-weight:600; font-size:.95rem; display:inline-block;
-            transition:opacity .2s,transform .15s;
-        }
-        .btn-amber:hover { opacity:.9; transform:translateY(-1px); }
+/* ===== Nav ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(11,11,20,0.82);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);height:56px;
+  display:flex;align-items:center;
+}
+nav .w{display:flex;justify-content:space-between;align-items:center;width:100%;gap:12px;}
+.logo{font-size:1.15rem;font-weight:700;white-space:nowrap;}
+.logo .hl{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-links{display:flex;gap:20px;align-items:center;font-size:.85rem;}
+.nav-links a{color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-user{
+  display:flex;align-items:center;gap:8px;padding:5px 14px;
+  background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.15);
+  border-radius:20px;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.nav-user:hover{background:rgba(168,85,247,0.15);}
+.magic-dot{
+  display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:var(--gold);animation:pulse-dot 2s infinite;
+}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.bt-menu{display:none;background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer;}
 
-        .hero-hint {
-            margin-top:50px;
-            display:flex; gap:32px; justify-content:center; flex-wrap:wrap;
-        }
-        .hero-hint div { text-align:center; }
-        .hero-hint .num { font-size:1.6rem; font-weight:700; }
-        .hero-hint .lbl { font-size:.78rem; color:#64748b; }
+/* ===== Hero ===== */
+.hero{min-height:80vh;display:flex;align-items:center;padding:100px 0 50px;text-align:center;}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.2;margin-bottom:12px;}
+.hero h1 .hl{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero p{font-size:1.05rem;color:var(--muted);max-width:480px;margin:0 auto 24px;}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 28px;border-radius:10px;
+  font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;
+  transition:all .2s;border:none;
+}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 4px 20px rgba(168,85,247,0.3);}
+.btn-outline{border:1px solid var(--border);color:var(--text);background:transparent;}
+.btn-outline:hover{border-color:rgba(168,85,247,0.3);}
+.btn-green{background:linear-gradient(135deg,var(--green),#10b981);color:#000;}
+.btn-green:hover{opacity:.9;transform:translateY(-1px);}
+.btn-ghost{color:var(--muted);text-decoration:none;font-weight:500;font-size:.9rem;}
+.btn-ghost:hover{color:var(--text);}
 
-        section { padding:80px 0; }
-        .section-tag {
-            display:inline-block;
-            background:rgba(168,85,247,.1); border:1px solid rgba(168,85,247,.15);
-            color:#a855f7; padding:4px 14px; border-radius:16px;
-            font-size:.75rem; margin-bottom:12px;
-        }
-        .section-tag.green {
-            background:rgba(52,211,153,.1); border-color:rgba(52,211,153,.15);
-            color:#34d399;
-        }
-        .section-tag.amber {
-            background:rgba(251,191,36,.1); border-color:rgba(251,191,36,.15);
-            color:#fbbf24;
-        }
-        .section-title { font-size:1.7rem; font-weight:700; margin-bottom:8px; }
-        .section-sub { color:#94a3b8; font-size:.95rem; max-width:480px; margin-bottom:36px; }
+.hero-stats{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:36px;}
+.hero-stats>div{text-align:center;}
+.hero-stats .n{font-size:1.5rem;font-weight:700;}
+.hero-stats .l{font-size:.75rem;color:var(--muted);}
 
-        .tut-steps { display:flex; flex-direction:column; gap:16px; }
-        .tut-step {
-            display:flex; gap:16px; align-items:flex-start;
-            background:rgba(255,255,255,.02);
-            border:1px solid rgba(255,255,255,.06);
-            border-radius:12px; padding:20px 24px;
-            transition:border-color .25s;
-        }
-        .tut-step:hover { border-color:rgba(168,85,247,.25); }
-        .tut-step .step-num {
-            width:36px; height:36px; min-width:36px;
-            display:flex; align-items:center; justify-content:center;
-            background:rgba(168,85,247,.15); color:#a855f7;
-            border-radius:8px; font-weight:700; font-size:.9rem;
-        }
-        .tut-step .step-body h3 { font-size:1rem; margin-bottom:4px; }
-        .tut-step .step-body p { font-size:.86rem; color:#94a3b8; }
+/* ===== Sections ===== */
+section{padding:80px 0;}
+.tag{
+  display:inline-block;padding:3px 12px;border-radius:12px;font-size:.7rem;font-weight:600;
+  margin-bottom:10px;
+}
+.tag-purple{background:rgba(168,85,247,0.08);color:var(--accent);border:1px solid rgba(168,85,247,0.12);}
+.tag-green{background:rgba(52,211,153,0.08);color:var(--green);border:1px solid rgba(52,211,153,0.12);}
+.tag-amber{background:rgba(251,191,36,0.08);color:var(--gold);border:1px solid rgba(251,191,36,0.12);}
+.s-title{font-size:1.6rem;font-weight:700;margin-bottom:6px;}
+.s-sub{color:var(--muted);font-size:.92rem;max-width:460px;margin-bottom:32px;}
 
-        .platform-tabs {
-            display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap;
-        }
-        .platform-tab {
-            padding:8px 20px; border-radius:6px; cursor:pointer;
-            border:1px solid rgba(255,255,255,.08);
-            color:#94a3b8; font-size:.85rem; font-weight:600;
-            background:transparent; transition:all .2s;
-        }
-        .platform-tab.active {
-            background:rgba(52,211,153,.12);
-            border-color:rgba(52,211,153,.25);
-            color:#34d399;
-        }
-        .platform-content { display:none; }
-        .platform-content.active { display:block; }
+/* ===== Steps ===== */
+.steps{display:flex;flex-direction:column;gap:12px;}
+.step{
+  display:flex;gap:14px;align-items:flex-start;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:18px 22px;transition:border-color .3s;
+}
+.step:hover{border-color:rgba(168,85,247,0.2);}
+.step .num{
+  width:32px;height:32px;min-width:32px;display:flex;
+  align-items:center;justify-content:center;
+  background:rgba(168,85,247,0.1);color:var(--accent);
+  border-radius:8px;font-weight:700;font-size:.85rem;
+}
+.step h3{font-size:.95rem;margin-bottom:2px;}
+.step p{font-size:.82rem;color:var(--muted);}
 
-        .guide-step {
-            background:rgba(255,255,255,.02);
-            border:1px solid rgba(255,255,255,.06);
-            border-radius:10px; padding:16px 20px; margin-bottom:12px;
-        }
-        .guide-step h4 { font-size:.9rem; margin-bottom:4px; }
-        .guide-step p { font-size:.84rem; color:#94a3b8; }
-        .guide-step code {
-            display:inline-block;
-            background:rgba(0,0,0,.3); color:#38bdf8;
-            padding:1px 6px; border-radius:4px;
-            font-size:.8rem; font-family:"SF Mono","Fira Code",monospace;
-        }
+/* ===== Platform Tabs ===== */
+.p-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;}
+.p-tab{
+  padding:7px 18px;border-radius:6px;cursor:pointer;
+  border:1px solid var(--border);color:var(--muted);
+  font-size:.82rem;font-weight:600;background:transparent;transition:all .2s;
+}
+.p-tab.active{background:rgba(52,211,153,0.08);border-color:rgba(52,211,153,0.2);color:var(--green);}
+.p-tab:hover{border-color:rgba(52,211,153,0.2);}
+.p-content{display:none;animation:fadeIn .3s;}
+.p-content.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-        .tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
-        .tool-card {
-            background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.06);
-            border-radius:12px; padding:24px;
-            transition:border-color .25s,transform .2s;
-        }
-        .tool-card:hover { border-color:rgba(168,85,247,.25); transform:translateY(-2px); }
-        .tool-card .ico { font-size:1.8rem; margin-bottom:8px; }
-        .tool-card h3 { font-size:1rem; margin-bottom:4px; }
-        .tool-card p { font-size:.84rem; color:#94a3b8; margin-bottom:12px; }
-        .magic-cost {
-            display:inline-block; background:rgba(251,191,36,.1);
-            color:#fbbf24; padding:2px 10px; border-radius:4px;
-            font-size:.72rem; font-weight:600;
-        }
-        .paid-badge {
-            display:inline-block; background:rgba(168,85,247,.1);
-            color:#a855f7; padding:2px 10px; border-radius:4px;
-            font-size:.72rem; font-weight:600;
-        }
-        .unlimited-badge {
-            display:inline-block; background:rgba(52,211,153,.1);
-            color:#34d399; padding:2px 10px; border-radius:4px;
-            font-size:.72rem; font-weight:600;
-        }
-        .tool-card .btn-sm-card {
-            display:inline-block; padding:6px 16px; border-radius:6px;
-            font-size:.82rem; font-weight:600; text-decoration:none;
-            background:rgba(168,85,247,.12); color:#a855f7;
-            border:1px solid rgba(168,85,247,.15);
-            transition:all .2s;
-        }
-        .tool-card .btn-sm-card:hover { background:rgba(168,85,247,.2); }
+.g-step{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;}
+.g-step h4{font-size:.88rem;margin-bottom:3px;}
+.g-step p{font-size:.82rem;color:var(--muted);}
+.g-step code{
+  display:inline-block;background:rgba(0,0,0,0.3);color:var(--accent2);
+  padding:1px 6px;border-radius:4px;font-size:.78rem;
+  font-family:"SF Mono","Fira Code",monospace;margin:2px 0;
+}
 
-        .pricing-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
-        .price-card {
-            background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.06);
-            border-radius:12px; padding:28px 24px; text-align:center;
-            transition:border-color .25s;
-            position:relative;
-        }
-        .price-card.featured {
-            border-color:rgba(168,85,247,.25);
-        }
-        .price-card.featured::before {
-            content:"🔥 热销";
-            position:absolute; top:-10px; left:50%; transform:translateX(-50%);
-            background:linear-gradient(90deg,#f59e0b,#f97316); color:#fff;
-            padding:3px 14px; border-radius:10px; font-size:.7rem; font-weight:600;
-        }
-        .price-card.flagship {
-            border-color:rgba(52,211,153,.25);
-            background:rgba(52,211,153,.02);
-        }
-        .price-card.flagship::before {
-            content:"👑 旗舰";
-            position:absolute; top:-10px; left:50%; transform:translateX(-50%);
-            background:linear-gradient(90deg,#34d399,#10b981); color:#000;
-            padding:3px 14px; border-radius:10px; font-size:.7rem; font-weight:600;
-        }
-        .price-card .pname { font-size:.9rem; color:#94a3b8; margin-bottom:6px; font-weight:600; }
-        .price-card .pprice { font-size:2.4rem; font-weight:800; margin-bottom:2px; }
-        .price-card .pprice .currency { font-size:1.2rem; font-weight:600; }
-        .price-card .pperiod { font-size:.78rem; color:#64748b; margin-bottom:6px; }
-        .price-card .pmagic { font-size:.85rem; color:#fbbf24; margin-bottom:14px; }
-        .price-card ul { list-style:none; text-align:left; margin-bottom:20px; }
-        .price-card ul li { padding:5px 0; font-size:.86rem; color:#c0c0c8; }
-        .price-card ul li.yes::before { content:"✨ "; color:#fbbf24; font-weight:700; }
-        .price-card ul li.no::before { content:"✗ "; color:#ef4444; }
-        .price-card ul li.unlimited::before { content:"∞ "; color:#34d399; font-weight:700; }
+/* ===== Magic Dashboard ===== */
+.magic-board{
+  background:rgba(251,191,36,0.03);border:1px solid rgba(251,191,36,0.1);
+  border-radius:14px;padding:28px;margin-bottom:28px;
+}
+.magic-board .mb-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;}
+.mb-balance{font-size:2rem;font-weight:800;}
+.mb-balance .label{font-size:.85rem;font-weight:400;color:var(--muted);}
+.mb-bar{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;margin-bottom:8px;}
+.mb-bar-inner{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),#f97316);transition:width .6s;}
+.mb-footer{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);flex-wrap:wrap;gap:6px;}
 
-        .blog-list { display:flex; flex-direction:column; gap:12px; }
-        .blog-item {
-            background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.06);
-            border-radius:12px; padding:18px 22px;
-            transition:border-color .25s; cursor:pointer;
-        }
-        .blog-item:hover { border-color:rgba(168,85,247,.25); }
-        .blog-item .bdate { font-size:.72rem; color:#64748b; }
-        .blog-item h3 { font-size:.95rem; margin:3px 0 4px; }
-        .blog-item p { font-size:.84rem; color:#94a3b8; }
+/* ===== Cards ===== */
+.grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:24px;transition:all .3s;
+}
+.card:hover{border-color:rgba(168,85,247,0.2);transform:translateY(-2px);}
+.card .ico{font-size:1.6rem;margin-bottom:8px;}
+.card h3{font-size:1rem;margin-bottom:4px;}
+.card p{font-size:.82rem;color:var(--muted);margin-bottom:12px;}
+.card .b{display:inline-block;padding:2px 10px;border-radius:4px;font-size:.7rem;font-weight:600;}
+.b-magic{background:rgba(251,191,36,0.08);color:var(--gold);}
+.b-paid{background:rgba(168,85,247,0.08);color:var(--accent);}
+.b-unlim{background:rgba(52,211,153,0.08);color:var(--green);}
+.card .act{
+  display:inline-block;padding:6px 16px;border-radius:6px;font-size:.8rem;
+  font-weight:600;text-decoration:none;
+  background:rgba(168,85,247,0.08);color:var(--accent);
+  border:1px solid rgba(168,85,247,0.12);transition:all .2s;
+}
+.card .act:hover{background:rgba(168,85,247,0.15);}
+.card .act-gold{background:rgba(251,191,36,0.08);color:var(--gold);border-color:rgba(251,191,36,0.12);}
 
-        .cta-block {
-            text-align:center;
-            background:rgba(168,85,247,.04); border:1px solid rgba(168,85,247,.12);
-            border-radius:16px; padding:48px 24px;
-        }
-        .cta-block h2 { font-size:1.8rem; margin-bottom:8px; }
-        .cta-block p { color:#94a3b8; max-width:420px; margin:0 auto 24px; font-size:.95rem; }
+/* ===== Pricing ===== */
+.p-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.p-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:28px 24px;text-align:center;position:relative;transition:all .3s;
+}
+.p-card:hover{border-color:rgba(168,85,247,0.15);}
+.p-card.pop{border-color:rgba(168,85,247,0.25);}
+.p-card.pop::after{
+  content:"🔥 热销";position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(90deg,var(--gold),#f97316);color:#fff;
+  padding:3px 14px;border-radius:10px;font-size:.65rem;font-weight:600;white-space:nowrap;
+}
+.p-card.max{border-color:rgba(52,211,153,0.25);background:rgba(52,211,153,0.02);}
+.p-card.max::after{
+  content:"👑 旗舰";position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(90deg,var(--green),#10b981);color:#000;
+  padding:3px 14px;border-radius:10px;font-size:.65rem;font-weight:600;white-space:nowrap;
+}
+.p-name{font-size:.85rem;color:var(--muted);font-weight:600;margin-bottom:4px;}
+.p-price{font-size:2.2rem;font-weight:800;}
+.p-price .s{font-size:1.1rem;}
+.p-period{font-size:.75rem;color:var(--muted);margin-bottom:4px;}
+.p-magic{font-size:.82rem;color:var(--gold);margin-bottom:12px;}
+.p-card ul{list-style:none;text-align:left;margin-bottom:16px;}
+.p-card ul li{padding:4px 0;font-size:.84rem;color:#c0c0c8;}
+.p-card ul li::before{content:"✓ ";color:var(--accent);font-weight:700;}
+.p-card ul li.lim::before{content:"∞ ";color:var(--green);font-weight:700;}
+.p-card ul li.no::before{content:"✗ ";color:#ef4444;}
+.p-card .btn{display:block;text-align:center;padding:11px;border-radius:8px;font-size:.88rem;width:100%;}
 
-        footer { border-top:1px solid rgba(255,255,255,.05); padding:28px 0; text-align:center; font-size:.82rem; color:#64748b; }
-        footer .footer-links { display:flex; gap:20px; justify-content:center; margin-bottom:8px; flex-wrap:wrap; }
-        footer .footer-links a { color:#94a3b8; text-decoration:none; font-size:.82rem; }
-        footer .footer-links a:hover { color:#e8e8ed; }
+/* One-time */
+.one-time{
+  margin-top:24px;background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:24px;
+}
+.ot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:14px;}
+.ot-item{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center;}
+.ot-item .ico{font-size:1.3rem;margin-bottom:4px;}
+.ot-item .t{font-size:.84rem;}
+.ot-item .d{font-size:.72rem;color:var(--muted);}
 
-        .section-divider { border:none; height:1px; background:linear-gradient(90deg,transparent,rgba(168,85,247,.15),transparent); margin:0; }
+/* ===== Blog ===== */
+.blog-list{display:flex;flex-direction:column;gap:10px;}
+.blog-item{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:16px 20px;cursor:pointer;transition:border-color .3s;
+}
+.blog-item:hover{border-color:rgba(168,85,247,0.2);}
+.blog-item .date{font-size:.7rem;color:var(--muted);}
+.blog-item h3{font-size:.92rem;margin:2px 0 3px;}
+.blog-item p{font-size:.8rem;color:var(--muted);}
 
-        @media(max-width:640px) {
-            .hero h1 { font-size:2rem; }
-            .hero .btns { flex-direction:column; align-items:stretch; }
-            .hero .btns a { text-align:center; }
-            .tools-grid,.pricing-grid { grid-template-columns:1fr; }
-            nav .links { display:none; flex-direction:column; position:absolute; top:56px; left:0; right:0; background:rgba(8,8,14,.95); padding:16px 20px; border-bottom:1px solid rgba(255,255,255,.06); }
-            nav .links.open { display:flex; }
-            .nav-toggle { display:block; }
-        }
-    </style>
+/* ===== CTA ===== */
+.cta{
+  text-align:center;background:rgba(168,85,247,0.03);
+  border:1px solid rgba(168,85,247,0.1);border-radius:16px;padding:44px 24px;
+}
+.cta h2{font-size:1.6rem;margin-bottom:6px;}
+.cta p{color:var(--muted);max-width:400px;margin:0 auto 20px;font-size:.92rem;}
+
+/* ===== Footer ===== */
+footer{border-top:1px solid var(--border);padding:24px 0;text-align:center;font-size:.8rem;color:var(--muted);}
+footer .fl{display:flex;gap:18px;justify-content:center;margin-bottom:6px;flex-wrap:wrap;}
+footer .fl a{color:var(--muted);text-decoration:none;font-size:.8rem;}
+footer .fl a:hover{color:var(--text);}
+
+/* ===== Divider ===== */
+hr{border:none;height:1px;background:linear-gradient(90deg,transparent,rgba(168,85,247,0.1),transparent);margin:0;}
+
+/* ===== Mobile ===== */
+@media(max-width:640px){
+  .hero h1{font-size:1.8rem;}
+  .hero-btns{flex-direction:column;align-items:stretch;}
+  .hero-btns .btn{justify-content:center;}
+  .grid-3,.p-grid,.ot-grid{grid-template-columns:1fr;}
+  .nav-links{display:none;flex-direction:column;position:absolute;top:56px;left:0;right:0;
+    background:rgba(11,11,20,0.95);padding:16px 20px;border-bottom:1px solid var(--border);
+    gap:14px;z-index:99;}
+  .nav-links.open{display:flex;}
+  .bt-menu{display:block;}
+  .mb-balance{font-size:1.6rem;}
+}
+
+/* ===== Skeleton Loader ===== */
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skeleton{
+  background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);
+  background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;
+}
+</style>
 </head>
 <body>
 
-<div class="parallax-layer" id="parallax">
-    <div class="bg-grid"></div>
-    <div class="bg-orb"></div>
-    <div class="bg-orb"></div>
-    <div class="bg-orb"></div>
+<div class="bg-layer">
+  <div class="grid"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
 </div>
 
+<!-- ===== NAV ===== -->
 <nav>
-    <div class="container">
-        <div class="logo">✨ AI工具箱</div>
-        <button class="nav-toggle" onclick="document.querySelector('nav .links').classList.toggle('open')">☰</button>
-        <div class="links">
-            <a href="#tutorial">教程</a>
-            <a href="#openclaw">免费部署</a>
-            <a href="#magic">魔法消耗</a>
-            <a href="#pricing">定价</a>
-            <a href="#blog">博客</a>
-            <a href="#cta" class="btn-sm">开始体验</a>
-        </div>
+  <div class="w">
+    <div class="logo">✨ <span class="hl">AI魔法工坊</span></div>
+    <button class="bt-menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <div class="nav-links">
+      <a href="#tutorial">教程</a>
+      <a href="#deploy">免费部署</a>
+      <a href="#tools">魔法工具</a>
+      <a href="#pricing">定价</a>
+      <a href="#blog">博客</a>
+      <div class="nav-user">
+        <span class="magic-dot"></span>
+        <span>200 <span style="color:var(--gold);">✨</span></span>
+        <span style="color:var(--muted);font-weight:400;">luchao</span>
+      </div>
     </div>
+  </div>
 </nav>
 
-<!-- HERO -->
+<!-- ===== HERO ===== -->
 <section class="hero">
-    <div class="container">
-        <h1>用 <span>AI</span> 赚钱<br />从 <span class="sparkle">✨魔法</span> 开始</h1>
-        <p>建站、生图、生视频——全部消耗<strong>魔法点</strong>。<br />按需付费，丰俭由人。开个月卡，够用就好。</p>
-        <div class="btns">
-            <a href="#pricing" class="btn-primary">🎯 查看定价</a>
-            <a href="#openclaw" class="btn-green">🎁 免费部署教程</a>
-        </div>
-        <div class="hero-hint">
-            <div><div class="num">✨</div><div class="lbl">魔法消耗制</div></div>
-            <div><div class="num">$6.99</div><div class="lbl">月卡Pro起</div></div>
-            <div><div class="num">$9.88</div><div class="lbl">月卡Pro Max</div></div>
-            <div><div class="num">🎁</div><div class="lbl">免费教程</div></div>
-        </div>
+  <div class="w">
+    <h1>用 <span class="hl">AI 魔法</span> 建站·生图·赚钱</h1>
+    <p>全部消耗<strong> ✨ 魔法点</strong>。开月卡送魔法，用完等下月。丰俭由人，够用就好。</p>
+    <div class="hero-btns">
+      <a href="#pricing" class="btn btn-primary">💎 查看定价</a>
+      <a href="#deploy" class="btn btn-green">🎁 免费部署教程</a>
+      <a href="#tools" class="btn btn-outline">✨ 魔法消耗明细</a>
     </div>
+    <div class="hero-stats">
+      <div><div class="n">200</div><div class="l">月卡魔法</div></div>
+      <div><div class="n">$6.99</div><div class="l">月卡Pro起</div></div>
+      <div><div class="n">$9.88</div><div class="l">月卡Pro Max</div></div>
+      <div><div class="n">$1.99</div><div class="l">单次建站</div></div>
+    </div>
+  </div>
 </section>
 
-<!-- ===== 教程 ===== -->
+<!-- ===== Tutorial ===== -->
 <section id="tutorial">
-    <div class="container">
-        <div class="section-tag">📖 免费教程</div>
-        <h2 class="section-title">不懂代码？4步搞定一个网站</h2>
-        <p class="section-sub">从0到上线，每一步都有AI帮忙。永久免费，随便看。</p>
-        <div class="tut-steps">
-            <div class="tut-step">
-                <div class="step-num">1</div>
-                <div class="step-body">
-                    <h3>🎯 确定方向</h3>
-                    <p>个人博客？工具站？产品展示？选一个方向，我们先定下来。</p>
-                </div>
-            </div>
-            <div class="tut-step">
-                <div class="step-num">2</div>
-                <div class="step-body">
-                    <h3>🤖 AI写代码</h3>
-                    <p>把想法告诉AI，它会帮你生成完整代码。你不用写一行代码。</p>
-                </div>
-            </div>
-            <div class="tut-step">
-                <div class="step-num">3</div>
-                <div class="step-body">
-                    <h3>📦 部署上线</h3>
-                    <p>用GitHub + GitHub Pages/Vercel 免费托管，推送即上线。</p>
-                </div>
-            </div>
-            <div class="tut-step">
-                <div class="step-num">4</div>
-                <div class="step-body">
-                    <h3>🌐 运营变现</h3>
-                    <p>域名 + 内容引流 + 卖服务/产品。网站可以自己赚钱。</p>
-                </div>
-            </div>
-        </div>
+  <div class="w">
+    <span class="tag tag-purple">📖 免费教程</span>
+    <h2 class="s-title">不懂代码？4步搞定一个网站</h2>
+    <p class="s-sub">所有教程永久免费公开，跟着做就行，0基础也能上手。</p>
+    <div class="steps">
+      <div class="step"><div class="num">1</div>
+        <div><h3>🎯 确定方向</h3><p>个人博客？产品展示？工具站？选一个你感兴趣的，先定下来。</p></div>
+      </div>
+      <div class="step"><div class="num">2</div>
+        <div><h3>🤖 AI 写代码</h3><p>把想法告诉 AI（Claude、ChatGPT），它帮你生成完整网站代码。</p></div>
+      </div>
+      <div class="step"><div class="num">3</div>
+        <div><h3>📦 部署上线</h3><p>GitHub Pages / Vercel 免费托管，推送即上线，全程不花钱。</p></div>
+      </div>
+      <div class="step"><div class="num">4</div>
+        <div><h3>🌐 运营变现</h3><p>加域名→引流→卖产品/接广告。网站自己赚钱。</p></div>
+      </div>
     </div>
+  </div>
 </section>
 
-<hr class="section-divider" />
+<hr />
 
-<!-- ===== 免费福利：部署 OpenClaw ===== -->
-<section id="openclaw">
-    <div class="container">
-        <div class="section-tag green">🎁 免费福利</div>
-        <h2 class="section-title">手把手部署 OpenClaw</h2>
-        <p class="section-sub">最简单的终端部署教程，Mac / Android / iPhone 全覆盖。永久免费公开。</p>
+<!-- ===== Free Deploy ===== -->
+<section id="deploy">
+  <div class="w">
+    <span class="tag tag-green">🎁 免费福利</span>
+    <h2 class="s-title">手把手部署 OpenClaw</h2>
+    <p class="s-sub">最简单的终端部署教程。Mac / Android / iPhone 全覆盖。永久免费。</p>
 
-        <div class="platform-tabs">
-            <button class="platform-tab active" onclick="switchPlatform('mac')">🍎 macOS</button>
-            <button class="platform-tab" onclick="switchPlatform('android')">🤖 Android</button>
-            <button class="platform-tab" onclick="switchPlatform('iphone')">📱 iPhone</button>
-        </div>
-
-        <div class="platform-content active" id="platform-mac">
-            <div class="guide-step">
-                <h4>1️⃣ 安装 Homebrew</h4>
-                <p>打开终端，粘贴：</p>
-                <code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code>
-            </div>
-            <div class="guide-step">
-                <h4>2️⃣ 安装 Node.js</h4>
-                <code>brew install node</code>
-                <p>验证：<code>node -v</code></p>
-            </div>
-            <div class="guide-step">
-                <h4>3️⃣ 安装 OpenClaw</h4>
-                <code>npm install -g openclaw</code>
-            </div>
-            <div class="guide-step">
-                <h4>4️⃣ 启动</h4>
-                <code>openclaw</code>
-                <p>浏览器打开 <code>http://localhost:18789</code></p>
-            </div>
-        </div>
-
-        <div class="platform-content" id="platform-android">
-            <div class="guide-step">
-                <h4>1️⃣ 安装 Termux</h4>
-                <p>F-Droid 搜索 Termux 安装。</p>
-            </div>
-            <div class="guide-step">
-                <h4>2️⃣ 更新 & 安装 Node</h4>
-                <code>pkg update && pkg upgrade -y</code>
-                <code>pkg install nodejs -y</code>
-            </div>
-            <div class="guide-step">
-                <h4>3️⃣ 安装 OpenClaw</h4>
-                <code>npm install -g openclaw</code>
-            </div>
-            <div class="guide-step">
-                <h4>4️⃣ 启动</h4>
-                <code>openclaw</code>
-            </div>
-        </div>
-
-        <div class="platform-content" id="platform-iphone">
-            <div class="guide-step">
-                <h4>1️⃣ 安装 iSH</h4>
-                <p>App Store 搜 <strong>iSH Shell</strong> 免费下载。</p>
-            </div>
-            <div class="guide-step">
-                <h4>2️⃣ 更新 & 安装 Node</h4>
-                <code>apk update && apk upgrade</code>
-                <code>apk add nodejs npm</code>
-            </div>
-            <div class="guide-step">
-                <h4>3️⃣ 安装 OpenClaw</h4>
-                <code>npm install -g openclaw</code>
-            </div>
-            <div class="guide-step">
-                <h4>4️⃣ 启动</h4>
-                <code>openclaw</code>
-            </div>
-        </div>
-
-        <div style="text-align:center;margin-top:24px;padding:16px;background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.1);border-radius:10px;">
-            <p style="color:#34d399;font-size:.9rem;">🎁 永久免费 · 持续更新</p>
-        </div>
+    <div class="p-tabs">
+      <button class="p-tab active" onclick="switchP('mac')">🍎 macOS</button>
+      <button class="p-tab" onclick="switchP('android')">🤖 Android</button>
+      <button class="p-tab" onclick="switchP('iphone')">📱 iPhone</button>
     </div>
+
+    <div class="p-content active" id="p-mac">
+      <div class="g-step"><h4>1️⃣ 安装 Homebrew</h4><p>打开终端粘贴：</p><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></div>
+      <div class="g-step"><h4>2️⃣ 安装 Node.js</h4><code>brew install node</code><p>验证：<code>node -v</code></p></div>
+      <div class="g-step"><h4>3️⃣ 安装 OpenClaw</h4><code>npm install -g openclaw</code></div>
+      <div class="g-step"><h4>4️⃣ 启动</h4><code>openclaw</code><p>浏览器打开 <code>http://localhost:18789</code></p></div>
+    </div>
+    <div class="p-content" id="p-android">
+      <div class="g-step"><h4>1️⃣ 安装 Termux</h4><p>F-Droid 搜索 Termux 安装</p></div>
+      <div class="g-step"><h4>2️⃣ 更新 & 安装 Node</h4><code>pkg update && pkg upgrade -y</code><code>pkg install nodejs -y</code></div>
+      <div class="g-step"><h4>3️⃣ 安装 OpenClaw</h4><code>npm install -g openclaw</code></div>
+      <div class="g-step"><h4>4️⃣ 启动</h4><code>openclaw</code></div>
+    </div>
+    <div class="p-content" id="p-iphone">
+      <div class="g-step"><h4>1️⃣ 安装 iSH</h4><p>App Store 搜索 iSH Shell 免费下载</p></div>
+      <div class="g-step"><h4>2️⃣ 更新 & 安装 Node</h4><code>apk update && apk upgrade</code><code>apk add nodejs npm</code></div>
+      <div class="g-step"><h4>3️⃣ 安装 OpenClaw</h4><code>npm install -g openclaw</code></div>
+      <div class="g-step"><h4>4️⃣ 启动</h4><code>openclaw</code></div>
+    </div>
+  </div>
 </section>
 
-<hr class="section-divider" />
+<hr />
 
-<!-- ===== 魔法消耗 ===== -->
-<section id="magic">
-    <div class="container">
-        <div class="section-tag amber">✨ 魔法消耗制</div>
-        <h2 class="section-title">每一口魔法都花在刀刃上</h2>
-        <p class="section-sub">生图、生视频、建站都消耗魔法点。月卡赠魔法，用完等下月。丰俭由人。</p>
+<!-- ===== Magic Tools ===== -->
+<section id="tools">
+  <div class="w">
+    <span class="tag tag-amber">✨ 魔法消耗制</span>
+    <h2 class="s-title">每一口魔法都花在刀刃上</h2>
+    <p class="s-sub">生图、视频、建站都消耗魔法。月卡送魔法，用完等补。</p>
 
-        <div style="background:rgba(251,191,36,.04);border:1px solid rgba(251,191,36,.1);border-radius:12px;padding:24px;margin-bottom:24px;text-align:center;">
-            <div style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">✨ 魔法消耗一览</div>
-            <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;font-size:.9rem;">
-                <span>🎨 AI 生图：<strong style="color:#fbbf24;">5 魔法 🔮/次</strong></span>
-                <span>🎬 AI 生视频：<strong style="color:#fbbf24;">10 魔法 🔮/次</strong></span>
-                <span>🌐 部署网站：<strong style="color:#fbbf24;">30 魔法 🔮/次</strong></span>
-            </div>
-        </div>
-
-        <div class="tools-grid">
-            <div class="tool-card">
-                <div class="ico">🎨</div>
-                <h3>AI 生图</h3>
-                <p>输入文字描述，AI 自动生成精美图片。封面、插图、产品图通通能做。</p>
-                <span class="magic-cost">✨ 消耗 5 魔法/次</span>
-                <div style="margin-top:12px;"><a href="#pricing" class="btn-sm-card">查看定价</a></div>
-            </div>
-            <div class="tool-card">
-                <div class="ico">🎬</div>
-                <h3>AI 生视频</h3>
-                <p>文字/图片转视频，适合抖音、视频号等短视频平台。</p>
-                <span class="magic-cost">✨ 消耗 10 魔法/次</span>
-                <div style="margin-top:12px;"><a href="#pricing" class="btn-sm-card">查看定价</a></div>
-            </div>
-            <div class="tool-card">
-                <div class="ico">🌐</div>
-                <h3>AI 建站服务 🏷️ 付费</h3>
-                <p>告诉 AI 你想要什么网站，自动生成完整代码并部署上线。单次购买，用完即止。</p>
-                <span class="magic-cost">✨ 消耗 30 魔法/次</span>
-                <span class="paid-badge" style="margin-left:4px;">付费服务</span>
-                <div style="margin-top:12px;"><a href="#pricing" class="btn-sm-card" style="border-color:rgba(251,191,36,.15);color:#fbbf24;">💰 查看定价</a></div>
-            </div>
-            <div class="tool-card">
-                <div class="ico">📝</div>
-                <h3>AI 文案写作</h3>
-                <p>SEO文章、产品介绍、推广文案。AI帮你写，你只管发。</p>
-                <span class="magic-cost">✨ 消耗 3 魔法/篇</span>
-                <div style="margin-top:12px;"><a href="#pricing" class="btn-sm-card">查看定价</a></div>
-            </div>
-        </div>
+    <!-- Magic Dashboard -->
+    <div class="magic-board" id="magicBoard">
+      <div class="mb-head">
+        <div><span style="color:var(--gold);font-size:1rem;">✨ 魔法余额</span></div>
+        <div><span style="font-size:.8rem;color:var(--muted);">月卡 Pro</span></div>
+      </div>
+      <div class="mb-balance"><span id="magicCount">200</span> <span class="label">✨ / 200 已用 86</span></div>
+      <div class="mb-bar"><div class="mb-bar-inner" id="magicBar" style="width:43%;"></div></div>
+      <div class="mb-footer">
+        <span>已用：86 ✨</span>
+        <span>重置：<span id="resetDays">18</span> 天后</span>
+        <span><a href="#pricing" style="color:var(--gold);">补魔 ↗</a></span>
+      </div>
     </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="ico">🎨</div>
+        <h3>AI 生图</h3>
+        <p>输入文字描述，AI 自动生成精美图片。封面、插图、产品图通通能做。</p>
+        <span class="b b-magic">✨ 5 魔法/次</span>
+        <div style="margin-top:12px;"><a href="#" class="act">🎨 去生图</a></div>
+      </div>
+      <div class="card">
+        <div class="ico">🎬</div>
+        <h3>AI 生视频</h3>
+        <p>文字/图片转视频，适合抖音、视频号等短视频平台创作素材。</p>
+        <span class="b b-magic">✨ 10 魔法/次</span>
+        <div style="margin-top:12px;"><a href="#" class="act">🎬 去生成</a></div>
+      </div>
+      <div class="card">
+        <div class="ico">🌐</div>
+        <h3>AI 建站</h3>
+        <p>告诉 AI 你想要什么网站，自动生成并部署上线。付费服务，用完即止。</p>
+        <span class="b b-paid">🔮 30 魔法/次</span>
+        <div style="margin-top:12px;"><a href="#" class="act act-gold">💰 去建站</a></div>
+      </div>
+      <div class="card">
+        <div class="ico">📝</div>
+        <h3>AI 文案</h3>
+        <p>SEO文章、产品介绍、社交媒体帖子。AI帮你写，你只管发布。</p>
+        <span class="b b-magic">✨ 3 魔法/篇</span>
+        <div style="margin-top:12px;"><a href="#" class="act">✍️ 去写作</a></div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;background:rgba(251,191,36,0.03);border:1px solid rgba(251,191,36,0.08);border-radius:10px;padding:18px;text-align:center;font-size:.88rem;">
+      <span style="color:var(--gold);font-weight:600;">💡 月卡 Pro Max 专属</span><span style="color:var(--muted);margin-left:8px;">生图和生视频不消耗魔法，无限次使用。</span>
+    </div>
+  </div>
 </section>
 
-<hr class="section-divider" />
+<hr />
 
-<!-- ===== 定价 ===== -->
+<!-- ===== Pricing ===== -->
 <section id="pricing">
-    <div class="container">
-        <div class="section-tag">💎 定价</div>
-        <h2 class="section-title">选一个适合你的月卡</h2>
-        <p class="section-sub">魔法够用就好，不浪费。每月自动续，随时取消。</p>
-        <div class="pricing-grid">
+  <div class="w">
+    <span class="tag tag-purple">💎 定价</span>
+    <h2 class="s-title">选一张适合你的月卡</h2>
+    <p class="s-sub">魔法够用就好，不浪费。每月自动续，随时可取消。</p>
 
-            <!-- 免费 -->
-            <div class="price-card">
-                <div class="pname">Free</div>
-                <div class="pprice"><span class="currency">$</span>0</div>
-                <div class="pperiod">永久免费</div>
-                <div class="pmagic">0 魔法</div>
-                <ul>
-                    <li class="yes">建站全流程教程</li>
-                    <li class="yes">OpenClaw 部署教程</li>
-                    <li class="no">AI 生图</li>
-                    <li class="no">AI 生视频</li>
-                    <li class="no">AI 建站</li>
-                    <li class="no">AI 文案</li>
-                </ul>
-                <a href="#openclaw" class="btn-outline" style="display:block;text-align:center;padding:12px;font-size:.9rem;">免费开始</a>
-            </div>
+    <div class="p-grid">
+      <div class="p-card">
+        <div class="p-name">Free</div>
+        <div class="p-price"><span class="s">$</span>0</div>
+        <div class="p-period">永久免费</div>
+        <div class="p-magic">0 ✨ 魔法</div>
+        <ul>
+          <li>建站全流程教程</li>
+          <li>OpenClaw 部署教程</li>
+          <li class="no">AI 生图</li>
+          <li class="no">AI 生视频</li>
+          <li class="no">AI 建站</li>
+        </ul>
+        <a href="#deploy" class="btn btn-outline">免费开始</a>
+      </div>
 
-            <!-- 月卡 Pro $6.99 -->
-            <div class="price-card featured">
-                <div class="pname">✨ 月卡 Pro</div>
-                <div class="pprice"><span class="currency">$</span>6.99</div>
-                <div class="pperiod">/月 — 随时取消</div>
-                <div class="pmagic">🎁 每月赠送 <strong>200 魔法</strong></div>
-                <ul>
-                    <li class="yes">建站教程 + 部署教程</li>
-                    <li class="yes">AI 生图（5魔法/次）≈ 40张</li>
-                    <li class="yes">AI 生视频（10魔法/次）≈ 20个</li>
-                    <li class="yes">AI 文案（3魔法/篇）≈ 66篇</li>
-                    <li class="yes">AI 建站（30魔法/次）≈ 6个站</li>
-                </ul>
-                <a href="#" class="btn-primary" style="display:block;text-align:center;padding:12px;font-size:.9rem;">开通月卡 · $6.99/月</a>
-                <p style="font-size:.72rem;color:#64748b;margin-top:8px;">🎯 轻度用户够用一个月</p>
-            </div>
+      <div class="p-card pop">
+        <div class="p-name">✨ 月卡 Pro</div>
+        <div class="p-price"><span class="s">$</span>6.99</div>
+        <div class="p-period">/月 — 随时取消</div>
+        <div class="p-magic">🎁 每月 <strong>200</strong> ✨ 魔法</div>
+        <ul>
+          <li>AI 生图（5✨/次）≈ 40 张</li>
+          <li>AI 生视频（10✨/次）≈ 20 个</li>
+          <li>AI 建站（30✨/次）≈ 6 个站</li>
+          <li>AI 文案（3✨/篇）≈ 66 篇</li>
+        </ul>
+        <a href="#" class="btn btn-primary">开通 $6.99/月</a>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:8px;">🎯 轻度用户刚好够一个月</p>
+      </div>
 
-            <!-- 月卡 Pro Max $9.88 -->
-            <div class="price-card flagship">
-                <div class="pname">👑 月卡 Pro Max</div>
-                <div class="pprice"><span class="currency">$</span>9.88</div>
-                <div class="pperiod">/月 — 随时取消</div>
-                <div class="pmagic">🎁 每月赠送 <strong>500 魔法</strong> + 🔓 无限生图/视频</div>
-                <ul>
-                    <li class="yes">建站教程 + 部署教程</li>
-                    <li class="unlimited">AI 生图 — 无限次（不扣魔法）</li>
-                    <li class="unlimited">AI 生视频 — 无限次（不扣魔法）</li>
-                    <li class="yes">免费建立 10 个网站（不扣魔法）</li>
-                    <li class="yes">500 额外魔法（可用于文案等）</li>
-                </ul>
-                <a href="#" class="btn-amber" style="display:block;text-align:center;padding:12px;font-size:.9rem;">开通月卡 · $9.88/月</a>
-                <p style="font-size:.72rem;color:#64748b;margin-top:8px;">🔥 重度用户首选，生图生视频随便用</p>
-            </div>
-
-        </div>
-
-        <!-- 单次服务 -->
-        <div style="margin-top:28px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:24px;">
-            <div style="text-align:center;">
-                <div class="pname" style="font-size:.9rem;color:#94a3b8;">💼 单次服务</div>
-                <div style="font-size:1.8rem;font-weight:800;"><span class="currency">$</span>1.99</div>
-                <div class="pperiod">/次 — 建站 + 赠魔法</div>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:16px;">
-                <div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:14px;text-align:center;">
-                    <span style="font-size:1.2rem;">🌐</span>
-                    <div style="font-size:.86rem;color:#e8e8ed;margin:4px 0;">建站 1 次部署</div>
-                    <div style="font-size:.72rem;color:#64748b;">AI智能生成+上线</div>
-                </div>
-                <div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:14px;text-align:center;">
-                    <span style="font-size:1.2rem;">✨</span>
-                    <div style="font-size:.86rem;color:#e8e8ed;margin:4px 0;">赠送 30 魔法</div>
-                    <div style="font-size:.72rem;color:#64748b;">可用于生图/生视频</div>
-                </div>
-            </div>
-            <div style="text-align:center;margin-top:12px;">
-                <a href="#" class="btn-outline" style="display:inline-block;padding:10px 24px;font-size:.85rem;">🛒 购买单次服务 · $1.99</a>
-            </div>
-        </div>
+      <div class="p-card max">
+        <div class="p-name">👑 月卡 Pro Max</div>
+        <div class="p-price"><span class="s">$</span>9.88</div>
+        <div class="p-period">/月 — 随时取消</div>
+        <div class="p-magic">🎁 每月 <strong>500 ✨</strong> + 🔓 无限生图/视频</div>
+        <ul>
+          <li class="lim">AI 生图 — 无限次（不扣魔法）</li>
+          <li class="lim">AI 生视频 — 无限次（不扣魔法）</li>
+          <li>免费建立 10 个网站（不扣魔法）</li>
+          <li>500 ✨ 额外魔法（文案/其他）</li>
+        </ul>
+        <a href="#" class="btn" style="background:linear-gradient(135deg,var(--gold),#f97316);color:#fff;">开通 $9.88/月</a>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:8px;">🔥 重度用户首选，随便用</p>
+      </div>
     </div>
+
+    <!-- One-time -->
+    <div class="one-time">
+      <div style="text-align:center;">
+        <div style="font-size:.85rem;color:var(--muted);font-weight:600;">💼 单次服务</div>
+        <div style="font-size:1.8rem;font-weight:800;"><span class="s">$</span>1.99 <span style="font-size:.8rem;font-weight:400;color:var(--muted);">/次</span></div>
+        <div style="font-size:.75rem;color:var(--muted);">建站部署 1 次 + 赠 30 ✨ 魔法</div>
+      </div>
+      <div class="ot-grid">
+        <div class="ot-item"><div class="ico">🌐</div><div class="t">建站 1 次部署</div><div class="d">AI 智能生成 + 上线</div></div>
+        <div class="ot-item"><div class="ico">✨</div><div class="t">赠送 30 魔法</div><div class="d">可用于生图/生视频</div></div>
+      </div>
+      <div style="text-align:center;margin-top:14px;"><a href="#" class="btn btn-outline" style="display:inline-flex;padding:10px 24px;">🛒 $1.99 购买</a></div>
+    </div>
+  </div>
 </section>
 
-<hr class="section-divider" />
+<hr />
 
-<!-- ===== 商业服务 ===== -->
-<section id="services" style="background:rgba(255,255,255,.01);">
-    <div class="container">
-        <div class="section-tag">🏢 商业服务</div>
-        <h2 class="section-title">定制方案 · 代建代运营</h2>
-        <p class="section-sub">有更高需求？我们提供一对一服务。</p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
-            <div class="tool-card">
-                <div class="ico">💻</div>
-                <h3>代建网站</h3>
-                <p>告诉我你的需求，我帮你用AI搭建专业网站。个人品牌、产品展示、企业官网。</p>
-                <div style="margin-top:8px;"><span style="color:#fbbf24;font-size:.9rem;font-weight:600;">起 $49</span></div>
-            </div>
-            <div class="tool-card">
-                <div class="ico">📈</div>
-                <h3>SEO 优化</h3>
-                <p>提升搜索引擎排名。关键词研究、内容优化、外链建设。</p>
-                <div style="margin-top:8px;"><span style="color:#fbbf24;font-size:.9rem;font-weight:600;">起 $29/月</span></div>
-            </div>
-            <div class="tool-card">
-                <div class="ico">🤝</div>
-                <h3>AI 自动化方案</h3>
-                <p>定制AI工作流，自动内容生成、自动回复客户等。</p>
-                <div style="margin-top:8px;"><span style="color:#fbbf24;font-size:.9rem;font-weight:600;">按需报价</span></div>
-            </div>
-        </div>
+<!-- ===== Services ===== -->
+<section id="services" style="background:rgba(255,255,255,0.008);">
+  <div class="w">
+    <span class="tag tag-purple">🏢 商业服务</span>
+    <h2 class="s-title">定制方案 · 代建代运营</h2>
+    <p class="s-sub">有更高需求？一对一服务，按需报价。</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="ico">💻</div>
+        <h3>代建网站</h3>
+        <p>告诉我你的需求，帮你搭建专业网站。个人品牌、企业官网都可以。</p>
+        <div style="margin-top:6px;"><span style="color:var(--gold);font-weight:600;font-size:.9rem;">起 $49</span></div>
+      </div>
+      <div class="card">
+        <div class="ico">📈</div>
+        <h3>SEO 优化</h3>
+        <p>提升百度/谷歌排名。关键词研究、内容优化、外链建设一条龙。</p>
+        <div style="margin-top:6px;"><span style="color:var(--gold);font-weight:600;font-size:.9rem;">起 $29/月</span></div>
+      </div>
+      <div class="card">
+        <div class="ico">🤝</div>
+        <h3>AI 自动化方案</h3>
+        <p>定制 AI 工作流，自动写文章、自动回复、自动生成内容。</p>
+        <div style="margin-top:6px;"><span style="color:var(--gold);font-weight:600;font-size:.9rem;">按需报价</span></div>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- 博客 -->
+<hr />
+
+<!-- ===== Blog ===== -->
 <section id="blog">
-    <div class="container">
-        <div class="section-tag">✍️ 博客</div>
-        <h2 class="section-title">实战记录</h2>
-        <p class="section-sub">每一篇都是真实的，跟着学就能上手。</p>
-        <div class="blog-list">
-            <div class="blog-item">
-                <div class="bdate">2026.05.09</div>
-                <h3>用AI半小时搭了一个网站——全程实录</h3>
-                <p>从打开AI到网站上线，只用了30分钟。我一句代码都没写。</p>
-            </div>
-            <div class="blog-item">
-                <div class="bdate">2026.05.08</div>
-                <h3>不会代码怎么用AI赚钱？6个方向</h3>
-                <p>代建网站、AI生图卖素材、做教程付费......选一个适合你的。</p>
-            </div>
-            <div class="blog-item">
-                <div class="bdate">2026.05.07</div>
-                <h3>选什么类型的网站最容易赚钱？</h3>
-                <p>工具站、教程站、导航站、资源站——各种模式优缺点分析。</p>
-            </div>
-        </div>
+  <div class="w">
+    <span class="tag tag-purple">✍️ 博客</span>
+    <h2 class="s-title">实战记录 · 赚钱思路</h2>
+    <p class="s-sub">每一篇都是实战记录，普通人也能跟着上手的路子。</p>
+    <div class="blog-list">
+      <div class="blog-item"><div class="date">2026.05.09</div><h3>用AI半小时搭了一个网站——全程实录</h3><p>从打开AI到网站上线，只用了30分钟。一句代码都没写。</p></div>
+      <div class="blog-item"><div class="date">2026.05.08</div><h3>不会代码怎么用AI赚钱？6个方向</h3><p>代建网站、AI生图卖素材、做教程付费……选一个适合你的。</p></div>
+      <div class="blog-item"><div class="date">2026.05.07</div><h3>选什么类型的网站最容易赚钱？</h3><p>工具站、教程站、导航站——各种模式的优缺点。</p></div>
     </div>
+  </div>
 </section>
 
-<!-- CTA -->
-<section id="cta">
-    <div class="container">
-        <div class="cta-block">
-            <h2>🚀 今晚就用魔法搭个网站</h2>
-            <p>从$0开始，先看免费教程，觉得行再开月卡。</p>
-            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-                <a href="#pricing" class="btn-primary">💎 查看定价</a>
-                <a href="#openclaw" class="btn-green">🎁 免费部署教程</a>
-            </div>
-        </div>
+<hr />
+
+<!-- ===== CTA ===== -->
+<section>
+  <div class="w">
+    <div class="cta">
+      <h2>🚀 今晚就用魔法搭个网站</h2>
+      <p>从 $0 开始，先看免费教程，觉得行再开月卡。</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <a href="#pricing" class="btn btn-primary">💎 查看定价</a>
+        <a href="#deploy" class="btn btn-green">🎁 免费部署教程</a>
+      </div>
     </div>
+  </div>
 </section>
 
 <footer>
-    <div class="footer-links">
-        <a href="#tutorial">教程</a>
-        <a href="#openclaw">部署OpenClaw</a>
-        <a href="#magic">魔法消耗</a>
-        <a href="#pricing">定价</a>
-        <a href="#blog">博客</a>
-    </div>
-    <p>© 2026 AI工具箱 · 用AI帮你赚钱 · ✨ 魔法消耗制</p>
+  <div class="fl">
+    <a href="#tutorial">教程</a>
+    <a href="#deploy">部署</a>
+    <a href="#tools">魔法工具</a>
+    <a href="#pricing">定价</a>
+    <a href="#blog">博客</a>
+  </div>
+  <p>© 2026 AI魔法工坊 · 用AI帮你赚钱 · ✨ 魔法消耗制</p>
 </footer>
 
 <script>
-    (function() {
-        const orbs = document.querySelectorAll('.bg-orb');
-        let ticking = false;
-        window.addEventListener('scroll', function() {
-            if (!ticking) {
-                window.requestAnimationFrame(function() {
-                    const scrollY = window.scrollY;
-                    orbs.forEach((orb, i) => {
-                        const speed = 0.05 * (i + 1);
-                        orb.style.transform = 'translateY(' + (scrollY * speed) + 'px)';
-                    });
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-    })();
-
-    function switchPlatform(name) {
-        document.querySelectorAll('.platform-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.platform-tab').forEach(el => el.classList.remove('active'));
-        document.getElementById('platform-' + name).classList.add('active');
-        document.querySelector('.platform-tab[onclick*="' + name + '"]').classList.add('active');
+// ===== Parallax =====
+(function(){
+  const orbs=document.querySelectorAll('.bg-layer .orb');
+  let tick=false;
+  window.addEventListener('scroll',()=>{
+    if(!tick){
+      requestAnimationFrame(()=>{
+        const y=window.scrollY;
+        orbs.forEach((o,i)=>{o.style.transform=`translateY(${y*(0.04*(i+1))}px)`});
+        tick=false;
+      });tick=true;
     }
+  });
+})();
+
+// ===== Platform Tabs =====
+function switchP(name){
+  document.querySelectorAll('.p-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.p-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('p-'+name).classList.add('active');
+  document.querySelector('.p-tab[onclick*="'+name+'"]').classList.add('active');
+}
+
+// ===== Magic Counter Demo =====
+(function(){
+  const el=document.getElementById('magicCount');
+  const bar=document.getElementById('magicBar');
+  if(!el)return;
+  let used=86,total=200;
+  function animateMagic(){
+    if(used<200){
+      used+=1;
+      el.textContent=200-used;
+      bar.style.width=((used/200)*100)+'%';
+      setTimeout(animateMagic,3000+Math.random()*5000);
+    }
+  }
+  setTimeout(animateMagic,2000);
+
+  // Reset days countdown
+  const rd=document.getElementById('resetDays');
+  if(rd){
+    let d=18;
+    setInterval(()=>{
+      d=d<=0?30:d-1;
+      rd.textContent=d;
+    },60000);
+  }
+})();
 </script>
 
 </body>
