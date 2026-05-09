@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SiteForge - 用AI建站，从这里开始</title>
-    <meta name="description" content="不懂代码？用AI从0建站，每日免费AI生图生视频，帮你搞定属于你自己的网站。" />
+    <title>AI工具箱 - 建站·生图·部署，AI帮你搞定</title>
+    <meta name="description" content="用AI做网站、AI生图、部署教程。不懂代码也能搞，每天免费体验。" />
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior:smooth; }
@@ -26,7 +26,7 @@
             position: absolute;
             border-radius: 50%;
             filter: blur(100px);
-            opacity: 0.15;
+            opacity: 0.12;
             transition: transform 0.1s ease-out;
         }
         .parallax-layer .bg-orb:nth-child(1) {
@@ -41,7 +41,7 @@
         }
         .parallax-layer .bg-orb:nth-child(3) {
             width: 400px; height: 400px;
-            background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+            background: linear-gradient(135deg, #34d399, #10b981);
             bottom: -100px; left: 30%;
         }
         .parallax-layer .bg-grid {
@@ -68,6 +68,7 @@
             background:linear-gradient(90deg,#818cf8,#38bdf8);
             -webkit-background-clip:text; -webkit-text-fill-color:transparent;
         }
+        .nav-toggle { display:none; background:none; border:none; color:#e8e8ed; font-size:1.4rem; cursor:pointer; }
         nav .links { display:flex; gap:24px; align-items:center; }
         nav .links a {
             color:#94a3b8; text-decoration:none; font-size:.88rem; transition:color .2s;
@@ -87,7 +88,7 @@
         }
         .hero h1 {
             font-size: 3rem; font-weight:800; line-height:1.2;
-            max-width:650px; margin:0 auto 14px;
+            max-width:700px; margin:0 auto 14px;
         }
         .hero h1 span {
             background:linear-gradient(135deg,#818cf8,#38bdf8);
@@ -95,7 +96,7 @@
         }
         .hero p {
             font-size:1.1rem; color:#94a3b8;
-            max-width:500px; margin:0 auto 28px;
+            max-width:520px; margin:0 auto 28px;
         }
         .hero .btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
         .btn-primary {
@@ -112,6 +113,13 @@
             transition:border-color .2s;
         }
         .btn-outline:hover { border-color:rgba(129,140,248,.4); }
+        .btn-green {
+            background:linear-gradient(90deg,#34d399,#10b981); color:#fff;
+            padding:13px 32px; border-radius:8px; text-decoration:none;
+            font-weight:600; font-size:.95rem; display:inline-block;
+            transition:opacity .2s,transform .15s;
+        }
+        .btn-green:hover { opacity:.9; transform:translateY(-1px); }
 
         .hero-hint {
             margin-top:50px;
@@ -129,8 +137,16 @@
             color:#818cf8; padding:4px 14px; border-radius:16px;
             font-size:.75rem; margin-bottom:12px;
         }
+        .section-tag.green {
+            background:rgba(52,211,153,.1); border-color:rgba(52,211,153,.15);
+            color:#34d399;
+        }
+        .section-tag.amber {
+            background:rgba(251,191,36,.1); border-color:rgba(251,191,36,.15);
+            color:#fbbf24;
+        }
         .section-title { font-size:1.7rem; font-weight:700; margin-bottom:8px; }
-        .section-sub { color:#94a3b8; font-size:.95rem; max-width:460px; margin-bottom:36px; }
+        .section-sub { color:#94a3b8; font-size:.95rem; max-width:480px; margin-bottom:36px; }
 
         /* ===== TUTORIAL STEPS ===== */
         .tut-steps { display:flex; flex-direction:column; gap:16px; }
@@ -151,8 +167,41 @@
         .tut-step .step-body h3 { font-size:1rem; margin-bottom:4px; }
         .tut-step .step-body p { font-size:.86rem; color:#94a3b8; }
 
+        /* ===== FREE OPENCLAW SECTION ===== */
+        .platform-tabs {
+            display:flex; gap:8px; margin-bottom:24px;
+        }
+        .platform-tab {
+            padding:8px 20px; border-radius:6px; cursor:pointer;
+            border:1px solid rgba(255,255,255,.08);
+            color:#94a3b8; font-size:.85rem; font-weight:600;
+            background:transparent; transition:all .2s;
+        }
+        .platform-tab.active {
+            background:rgba(129,140,248,.12);
+            border-color:rgba(129,140,248,.25);
+            color:#818cf8;
+        }
+        .platform-tab:hover { border-color:rgba(129,140,248,.2); }
+        .platform-content { display:none; }
+        .platform-content.active { display:block; }
+
+        .guide-step {
+            background:rgba(255,255,255,.02);
+            border:1px solid rgba(255,255,255,.06);
+            border-radius:10px; padding:16px 20px; margin-bottom:12px;
+        }
+        .guide-step h4 { font-size:.9rem; margin-bottom:4px; }
+        .guide-step p { font-size:.84rem; color:#94a3b8; }
+        .guide-step code {
+            display:inline-block;
+            background:rgba(0,0,0,.3); color:#38bdf8;
+            padding:1px 6px; border-radius:4px;
+            font-size:.8rem; font-family:"SF Mono","Fira Code",monospace;
+        }
+
         /* ===== AI TOOLS ===== */
-        .tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
+        .tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
         .tool-card {
             background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.06);
             border-radius:12px; padding:24px;
@@ -161,7 +210,7 @@
         .tool-card:hover { border-color:rgba(129,140,248,.25); transform:translateY(-2px); }
         .tool-card .ico { font-size:1.8rem; margin-bottom:8px; }
         .tool-card h3 { font-size:1rem; margin-bottom:4px; }
-        .tool-card p { font-size:.84rem; color:#94a3b8; margin-bottom:10px; }
+        .tool-card p { font-size:.84rem; color:#94a3b8; margin-bottom:12px; }
         .tool-card .free-badge {
             display:inline-block; background:rgba(34,197,94,.1);
             color:#22c55e; padding:2px 10px; border-radius:4px;
@@ -171,6 +220,21 @@
             display:inline-block; background:rgba(251,191,36,.1);
             color:#fbbf24; padding:2px 10px; border-radius:4px;
             font-size:.72rem; font-weight:600;
+        }
+        .tool-card .paid-badge {
+            display:inline-block; background:rgba(129,140,248,.1);
+            color:#818cf8; padding:2px 10px; border-radius:4px;
+            font-size:.72rem; font-weight:600;
+        }
+        .tool-card .btn-sm-card {
+            display:inline-block; padding:6px 16px; border-radius:6px;
+            font-size:.82rem; font-weight:600; text-decoration:none;
+            background:rgba(129,140,248,.12); color:#818cf8;
+            border:1px solid rgba(129,140,248,.15);
+            transition:all .2s;
+        }
+        .tool-card .btn-sm-card:hover {
+            background:rgba(129,140,248,.2);
         }
 
         /* ===== PRICING ===== */
@@ -191,7 +255,8 @@
             padding:3px 14px; border-radius:10px; font-size:.7rem; font-weight:600;
         }
         .price-card .pname { font-size:.9rem; color:#94a3b8; margin-bottom:6px; }
-        .price-card .pprice { font-size:2.2rem; font-weight:800; margin-bottom:2px; }
+        .price-card .pprice { font-size:2.4rem; font-weight:800; margin-bottom:2px; }
+        .price-card .pprice .currency { font-size:1.2rem; font-weight:600; }
         .price-card .pperiod { font-size:.78rem; color:#64748b; margin-bottom:16px; }
         .price-card ul { list-style:none; text-align:left; margin-bottom:20px; }
         .price-card ul li { padding:5px 0; font-size:.86rem; color:#c0c0c8; }
@@ -220,12 +285,25 @@
 
         /* ===== FOOTER ===== */
         footer { border-top:1px solid rgba(255,255,255,.05); padding:28px 0; text-align:center; font-size:.82rem; color:#64748b; }
+        footer .footer-links { display:flex; gap:20px; justify-content:center; margin-bottom:8px; flex-wrap:wrap; }
+        footer .footer-links a { color:#94a3b8; text-decoration:none; font-size:.82rem; }
+        footer .footer-links a:hover { color:#e8e8ed; }
+
+        /* ===== DIVIDER ===== */
+        .section-divider {
+            border:none; height:1px;
+            background:linear-gradient(90deg,transparent,rgba(129,140,248,.15),transparent);
+            margin:0;
+        }
 
         @media(max-width:640px) {
             .hero h1 { font-size:2rem; }
             .hero .btns { flex-direction:column; align-items:stretch; }
             .hero .btns a { text-align:center; }
             .tools-grid,.pricing-grid { grid-template-columns:1fr; }
+            nav .links { display:none; flex-direction:column; position:absolute; top:56px; left:0; right:0; background:rgba(8,8,14,.95); padding:16px 20px; border-bottom:1px solid rgba(255,255,255,.06); }
+            nav .links.open { display:flex; }
+            .nav-toggle { display:block; }
         }
     </style>
 </head>
@@ -242,13 +320,15 @@
 <!-- NAV -->
 <nav>
     <div class="container">
-        <div class="logo">SiteForge</div>
+        <div class="logo">AI工具箱</div>
+        <button class="nav-toggle" onclick="document.querySelector('nav .links').classList.toggle('open')">☰</button>
         <div class="links">
-            <a href="#tutorial">教程</a>
-            <a href="#tools">免费工具</a>
-            <a href="#pricing">升级</a>
+            <a href="#build">建站教程</a>
+            <a href="#openclaw">福利·部署OpenClaw</a>
+            <a href="#tools">AI工具</a>
+            <a href="#pricing">定价</a>
             <a href="#blog">博客</a>
-            <a href="#cta" class="btn-sm">开始建站</a>
+            <a href="#cta" class="btn-sm">开始体验</a>
         </div>
     </div>
 </nav>
@@ -256,169 +336,322 @@
 <!-- HERO -->
 <section class="hero">
     <div class="container">
-        <h1>用 <span>AI</span> 搭一个<br />属于你自己的网站</h1>
-        <p>不懂代码？没关系。从0到上线，AI帮你搞定。每天还能免费生成视频素材。</p>
+        <h1>用 <span>AI</span> 赚钱<br />从建站开始</h1>
+        <p>不懂代码？没关系。AI帮你建站、生图、部署。<br />每天免费体验，满意再升级。</p>
         <div class="btns">
-            <a href="#tutorial" class="btn-primary">🎯 开始建站</a>
-            <a href="#tools" class="btn-outline">🎨 免费AI工具</a>
+            <a href="#build" class="btn-primary">🎯 开始建站</a>
+            <a href="#openclaw" class="btn-green">🎁 免费部署教程</a>
         </div>
         <div class="hero-hint">
-            <div><div class="num">4</div><div class="lbl">步上线</div></div>
+            <div><div class="num">4</div><div class="lbl">步上线一个网站</div></div>
+            <div><div class="num">2</div><div class="lbl">每日免费AI生图</div></div>
+            <div><div class="num">$6.99</div><div class="lbl">Pro月费</div></div>
             <div><div class="num">0</div><div class="lbl">代码门槛</div></div>
-            <div><div class="num">每日</div><div class="lbl">免费生成</div></div>
         </div>
     </div>
 </section>
 
-<!-- TUTORIAL -->
-<section id="tutorial">
+<!-- ===== SECTION 1: 建站教程 ===== -->
+<section id="build">
     <div class="container">
-        <div class="section-tag">📖 全流程教程</div>
-        <h2 class="section-title">从0到上线，只需4步</h2>
-        <p class="section-sub">每一步都有AI帮忙，不需要你会写代码。跟着走就行。</p>
+        <div class="section-tag">📖 建站全流程教程</div>
+        <h2 class="section-title">不懂代码？4步搞定一个网站</h2>
+        <p class="section-sub">从0到上线，每一步都有AI帮忙。看完就能上手，不需要任何编程基础。</p>
         <div class="tut-steps">
             <div class="tut-step">
                 <div class="step-num">1</div>
                 <div class="step-body">
                     <h3>🎯 确定方向</h3>
-                    <p>个人博客？工具站？资源导航？选一个你感兴趣的，我们开始。</p>
+                    <p>个人博客？工具站？资源导航？产品展示？选一个你感兴趣的，我们先定下来。</p>
                 </div>
             </div>
             <div class="tut-step">
                 <div class="step-num">2</div>
                 <div class="step-body">
                     <h3>🤖 AI写代码</h3>
-                    <p>把想法告诉AI（Claude、ChatGPT等），它会帮你生成完整的网站HTML/CSS代码。</p>
+                    <p>把想法告诉AI（Claude、ChatGPT等），它会帮你生成完整的网站HTML/CSS代码。你只需要描述，不用写一行代码。</p>
                 </div>
             </div>
             <div class="tut-step">
                 <div class="step-num">3</div>
                 <div class="step-body">
                     <h3>📦 部署上线</h3>
-                    <p>用GitHub存代码，连接免费托管平台（Vercel/GitHub Pages），推送即上线。</p>
+                    <p>用GitHub存代码，连接免费托管平台（Vercel/GitHub Pages），推送即上线。全程免费，域名几十块一年。</p>
                 </div>
             </div>
             <div class="tut-step">
                 <div class="step-num">4</div>
                 <div class="step-body">
                     <h3>🌐 运营变现</h3>
-                    <p>绑定域名 → 发博客引流 → 接广告或卖会员。让网站自己赚钱。</p>
+                    <p>绑定域名 → 发内容引流 → 接广告或卖会员/产品。让网站自己赚钱，睡后收入不是梦。</p>
                 </div>
             </div>
         </div>
         <div style="text-align:center;margin-top:28px;">
-            <a href="#pricing" style="color:#818cf8;font-size:.9rem;">想学更详细的？查看Pro教程 →</a>
+            <a href="#pricing" style="color:#818cf8;font-size:.9rem;">想学更深入的？查看Pro版教程 →</a>
         </div>
     </div>
 </section>
 
-<!-- FREE AI TOOLS -->
-<section id="tools" style="background:rgba(255,255,255,.01);">
+<hr class="section-divider" />
+
+<!-- ===== SECTION 2: 免费福利 - OpenClaw 部署教程 ===== -->
+<section id="openclaw">
     <div class="container">
-        <div class="section-tag">🎨 免费AI工具</div>
-        <h2 class="section-title">每日免费使用</h2>
-        <p class="section-sub">每天送你免费额度，够你日常用。想多用？升级解锁更多次数。</p>
+        <div class="section-tag green">🎁 免费福利</div>
+        <h2 class="section-title">手把手教你部署 OpenClaw</h2>
+        <p class="section-sub">用最简单的终端命令，把 OpenClaw 部署到你的设备上。免费公开，新手友好。</p>
+
+        <div class="platform-tabs">
+            <button class="platform-tab active" onclick="switchPlatform('mac')">🍎 macOS</button>
+            <button class="platform-tab" onclick="switchPlatform('android')">🤖 Android</button>
+            <button class="platform-tab" onclick="switchPlatform('iphone')">📱 iPhone</button>
+        </div>
+
+        <!-- macOS -->
+        <div class="platform-content active" id="platform-mac">
+            <div class="guide-step">
+                <h4>1️⃣ 安装 Homebrew（包管理器）</h4>
+                <p>打开终端，粘贴下面这行命令，回车：</p>
+                <code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code>
+            </div>
+            <div class="guide-step">
+                <h4>2️⃣ 安装 Node.js</h4>
+                <p>Homebrew 装完后，继续在终端输入：</p>
+                <code>brew install node</code>
+                <p style="margin-top:4px;">验证安装：<code>node -v</code> 应该显示版本号，比如 v22.x</p>
+            </div>
+            <div class="guide-step">
+                <h4>3️⃣ 安装 OpenClaw</h4>
+                <p>一行命令搞定：</p>
+                <code>npm install -g openclaw</code>
+            </div>
+            <div class="guide-step">
+                <h4>4️⃣ 启动 OpenClaw</h4>
+                <p>装好后在终端输入：</p>
+                <code>openclaw</code>
+                <p style="margin-top:4px;">浏览器打开显示的地址（通常是 <code>http://localhost:18789</code>），看到网页界面就成功了！</p>
+            </div>
+            <div class="guide-step">
+                <h4>💡 常用命令</h4>
+                <p>查看状态：<code>openclaw status</code></p>
+                <p>查看帮助：<code>openclaw help</code></p>
+                <p>更新版本：<code>npm update -g openclaw</code></p>
+            </div>
+        </div>
+
+        <!-- Android -->
+        <div class="platform-content" id="platform-android">
+            <div class="guide-step">
+                <h4>1️⃣ 安装 Termux</h4>
+                <p>打开手机浏览器，去 F-Droid 搜索安装 Termux（不要从Google Play装，那个版本太旧）。</p>
+            </div>
+            <div class="guide-step">
+                <h4>2️⃣ 更新包管理器</h4>
+                <p>打开 Termux，输入：</p>
+                <code>pkg update && pkg upgrade -y</code>
+            </div>
+            <div class="guide-step">
+                <h4>3️⃣ 安装 Node.js</h4>
+                <p>继续在 Termux 里输入：</p>
+                <code>pkg install nodejs -y</code>
+            </div>
+            <div class="guide-step">
+                <h4>4️⃣ 安装 OpenClaw</h4>
+                <code>npm install -g openclaw</code>
+            </div>
+            <div class="guide-step">
+                <h4>5️⃣ 启动</h4>
+                <code>openclaw</code>
+                <p style="margin-top:4px;">手机上会显示本地地址，在浏览器打开就能用了。建议搭配 <code>tmux</code> 让它在后台运行。</p>
+            </div>
+        </div>
+
+        <!-- iPhone -->
+        <div class="platform-content" id="platform-iphone">
+            <div class="guide-step">
+                <h4>1️⃣ 安装 iSH（终端模拟器）</h4>
+                <p>去 App Store 搜索 <strong>iSH Shell</strong>，免费下载安装。这是 iPhone 上最好用的终端。</p>
+            </div>
+            <div class="guide-step">
+                <h4>2️⃣ 更新软件源</h4>
+                <p>打开 iSH，输入：</p>
+                <code>apk update && apk upgrade</code>
+            </div>
+            <div class="guide-step">
+                <h4>3️⃣ 安装 Node.js</h4>
+                <code>apk add nodejs npm</code>
+            </div>
+            <div class="guide-step">
+                <h4>4️⃣ 安装 OpenClaw</h4>
+                <code>npm install -g openclaw</code>
+            </div>
+            <div class="guide-step">
+                <h4>5️⃣ 启动</h4>
+                <code>openclaw</code>
+                <p style="margin-top:4px;">在 iPhone 的 Safari 浏览器打开显示的地址，就可以访问了。回到桌面 iSH 会在后台继续运行。</p>
+            </div>
+        </div>
+
+        <div style="text-align:center;margin-top:24px;padding:16px;background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.1);border-radius:10px;">
+            <p style="color:#34d399;font-size:.9rem;">🎁 此板块永久免费 · 持续更新更多部署教程</p>
+        </div>
+    </div>
+</section>
+
+<hr class="section-divider" />
+
+<!-- ===== SECTION 3: AI 生图工具（商业） ===== -->
+<section id="tools">
+    <div class="container">
+        <div class="section-tag amber">💼 商业产品</div>
+        <h2 class="section-title">AI 工具箱 · 每人每天2次免费体验</h2>
+        <p class="section-sub">想多用升级 Pro，每天免费体验2次，不花冤枉钱。</p>
         <div class="tools-grid">
+            <div class="tool-card">
+                <div class="ico">🎨</div>
+                <h3>AI 生图 · 文字转图片</h3>
+                <p>输入一段文字描述，AI 自动生成精美图片。做网站封面、文章插图、产品图、社交媒体配图。</p>
+                <span class="free-badge">每日2次免费</span>
+                <span class="paid-badge" style="margin-left:4px;">Pro 无限</span>
+                <div style="margin-top:12px;"><a href="#" class="btn-sm-card">🎨 体验生图</a></div>
+            </div>
+            <div class="tool-card">
+                <div class="ico">🌐</div>
+                <h3>AI 建站服务</h3>
+                <p>告诉 AI 你想要什么样的网站，自动生成完整代码并部署上线。个人博客、产品展示、工具导航都能做。</p>
+                <span class="free-badge">每日1次免费</span>
+                <span class="paid-badge" style="margin-left:4px;">Pro 不限次</span>
+                <div style="margin-top:12px;"><a href="#" class="btn-sm-card">🌐 开始建站</a></div>
+            </div>
+            <div class="tool-card">
+                <div class="ico">📝</div>
+                <h3>AI 文案写作</h3>
+                <p>SEO文章、产品介绍、推广文案、社交媒体帖子。AI帮你写，你只管发。</p>
+                <span class="free-badge">每日2次免费</span>
+                <span class="paid-badge" style="margin-left:4px;">Pro 不限次</span>
+                <div style="margin-top:12px;"><a href="#" class="btn-sm-card">✍️ 写文案</a></div>
+            </div>
             <div class="tool-card">
                 <div class="ico">🖼️→🎬</div>
                 <h3>图生视频</h3>
-                <p>上传一张图片，AI自动生成动态视频。适合做社交媒体内容。</p>
-                <span class="free-badge">每日3次免费</span>
-            </div>
-            <div class="tool-card">
-                <div class="ico">📝→🎬</div>
-                <h3>文生视频</h3>
-                <p>输入一段文字描述，AI直接生成视频。做宣传片、教程素材。</p>
-                <span class="free-badge">每日2次免费</span>
-            </div>
-            <div class="tool-card">
-                <div class="ico">🤖</div>
-                <h3>AI网站生成</h3>
-                <p>描述你想要的网站，AI直接生成完整代码，一键部署上线。</p>
+                <p>上传一张图片，AI自动生成动态短视频。适合做抖音、视频号素材。</p>
                 <span class="free-badge">每日1次免费</span>
-            </div>
-            <div class="tool-card">
-                <div class="ico">✍️</div>
-                <h3>AI文案生成</h3>
-                <p>写SEO文章、产品介绍、推广文案。AI帮你写，你只管发。</p>
-                <span class="free-badge">每日5次免费</span>
-            </div>
-            <div class="tool-card">
-                <div class="ico">🎨</div>
-                <h3>AI配图生成</h3>
-                <p>根据文字生成配图，做网站封面、文章插图、产品图。</p>
-                <span class="free-badge">每日5次免费</span>
-            </div>
-            <div class="tool-card">
-                <div class="ico">🔧</div>
-                <h3>更多工具</h3>
-                <p>持续更新中……SEO分析、网站模板、域名推荐等实用工具。</p>
-                <span class="limit-badge">Pro专享</span>
+                <span class="paid-badge" style="margin-left:4px;">Pro 每日20次</span>
+                <div style="margin-top:12px;"><a href="#" class="btn-sm-card">🎬 生成视频</a></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- PRICING -->
+<!-- ===== SECTION 4: 商业服务 ===== -->
+<section id="services" style="background:rgba(255,255,255,.01);">
+    <div class="container">
+        <div class="section-tag">🏢 商业服务</div>
+        <h2 class="section-title">帮你做网站，帮你变现</h2>
+        <p class="section-sub">不只是工具，我们还提供全套商业服务。</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+            <div class="tool-card">
+                <div class="ico">💻</div>
+                <h3>代建网站</h3>
+                <p>告诉我你的需求，我来帮你用AI快速搭建网站。个人品牌、产品展示、落地页都有。</p>
+                <div style="margin-top:8px;"><span style="color:#fbbf24;font-size:.9rem;font-weight:600;">起 $49</span></div>
+            </div>
+            <div class="tool-card">
+                <div class="ico">📈</div>
+                <h3>SEO 优化服务</h3>
+                <p>让你的网站在百度、谷歌排名更靠前。关键词研究、内容优化、外链建设。</p>
+                <div style="margin-top:8px;"><span style="color:#fbbf24;font-size:.9rem;font-weight:600;">起 $29/月</span></div>
+            </div>
+            <div class="tool-card">
+                <div class="ico">🤝</div>
+                <h3>AI 自动化方案</h3>
+                <p>定制 AI 工作流，自动化你的业务。自动发文章、自动回复客户、自动生成内容。</p>
+                <div style="margin-top:8px;"><span style="color:#fbbf24;font-size:.9rem;font-weight:600;">按需报价</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SECTION 5: 定价 ===== -->
 <section id="pricing">
     <div class="container">
-        <div class="section-tag">💎 升级解锁更多</div>
-        <h2 class="section-title">选一个适合你的</h2>
-        <p class="section-sub">免费版够用，Pro版好用。先免费试试，觉得值再付钱。</p>
+        <div class="section-tag">💎 升级 Pro</div>
+        <h2 class="section-title">免费够用，Pro 更好用</h2>
+        <p class="section-sub">每天免费体验，觉得值再付钱。用美元定价，全球统一。</p>
         <div class="pricing-grid">
+            <!-- Free -->
             <div class="price-card">
-                <div class="pname">免费</div>
-                <div class="pprice">¥0</div>
+                <div class="pname">Free</div>
+                <div class="pprice"><span class="currency">$</span>0</div>
                 <div class="pperiod">永久免费</div>
                 <ul>
                     <li>建站全流程教程</li>
-                    <li>每日免费AI生成额度</li>
+                    <li>OpenClaw 部署教程（福利）</li>
+                    <li>每日免费AI体验额度</li>
                     <li>社区交流</li>
                     <li>基础博客内容</li>
                 </ul>
-                <a href="#" class="btn-outline" style="display:block;text-align:center;padding:12px;font-size:.9rem;">免费开始</a>
+                <a href="#openclaw" class="btn-outline" style="display:block;text-align:center;padding:12px;font-size:.9rem;">免费开始</a>
             </div>
+            <!-- Pro $6.99 -->
             <div class="price-card featured">
                 <div class="pname">Pro</div>
-                <div class="pprice">¥99</div>
-                <div class="pperiod">永久买断</div>
+                <div class="pprice"><span class="currency">$</span>6.99</div>
+                <div class="pperiod">/月 — 随时取消</div>
                 <ul>
                     <li>所有免费内容</li>
-                    <li>AI生成额度大幅提升</li>
-                    <li>高级实战项目教程</li>
-                    <li>AI提示词模板库</li>
-                    <li>一对一答疑</li>
-                    <li>Pro专享工具</li>
+                    <li>AI 生图不限次数</li>
+                    <li>AI 建站不限次数</li>
+                    <li>AI 文案不限次数</li>
+                    <li>高级实战项目教程（价值$29）</li>
+                    <li>AI 提示词模板库</li>
+                    <li>Pro 专属社群</li>
+                    <li>优先技术支持</li>
                 </ul>
-                <a href="#" class="btn-primary" style="display:block;text-align:center;padding:12px;font-size:.9rem;">购买 Pro</a>
+                <a href="#" class="btn-primary" style="display:block;text-align:center;padding:12px;font-size:.9rem;">订阅 Pro · $6.99/月</a>
             </div>
+            <!-- Custom -->
             <div class="price-card">
-                <div class="pname">定制</div>
-                <div class="pprice">咨询</div>
-                <div class="pperiod">按需</div>
+                <div class="pname">定制方案</div>
+                <div class="pprice"><span class="currency">$</span>—</div>
+                <div class="pperiod">按需报价</div>
                 <ul>
-                    <li>所有Pro内容</li>
+                    <li>所有 Pro 内容</li>
                     <li>定制网站开发</li>
-                    <li>AI自动化工作流</li>
-                    <li>长期技术支持</li>
+                    <li>AI 自动化工作流搭建</li>
+                    <li>长期技术支持与维护</li>
+                    <li>一对一咨询</li>
                 </ul>
-                <a href="#" class="btn-outline" style="display:block;text-align:center;padding:12px;font-size:.9rem;">联系我</a>
+                <a href="#" class="btn-outline" style="display:block;text-align:center;padding:12px;font-size:.9rem;">联系我 →</a>
             </div>
+        </div>
+        <div style="text-align:center;margin-top:28px;">
+            <p style="color:#64748b;font-size:.85rem;">
+                💡 觉得贵？每天免费体验，觉得好用再升级。不满意随时取消。
+            </p>
         </div>
     </div>
 </section>
 
-<!-- BLOG -->
-<section id="blog" style="background:rgba(255,255,255,.01);">
+<hr class="section-divider" />
+
+<!-- ===== SECTION 6: 博客 ===== -->
+<section id="blog">
     <div class="container">
         <div class="section-tag">✍️ 博客</div>
-        <h2 class="section-title">建站实战记录</h2>
-        <p class="section-sub">每一步都是真实的，跟着做就行。</p>
+        <h2 class="section-title">实战记录 · 赚钱思路</h2>
+        <p class="section-sub">每一篇都是真实的，跟着学就能上手。</p>
         <div class="blog-list">
             <div class="blog-item">
-                <div class="bdate">2026.05.08</div>
+                <div class="bdate">2026.05.09</div>
                 <h3>用AI半小时搭了一个网站——全程实录</h3>
                 <p>从打开AI到网站上线，只用了30分钟。我一句代码都没写。</p>
+            </div>
+            <div class="blog-item">
+                <div class="bdate">2026.05.08</div>
+                <h3>不会代码怎么用AI赚钱？6个方向</h3>
+                <p>代建网站、AI生图卖素材、做教程付费......选一个适合你的。</p>
             </div>
             <div class="blog-item">
                 <div class="bdate">2026.05.07</div>
@@ -427,7 +660,7 @@
             </div>
             <div class="blog-item">
                 <div class="bdate">2026.05.06</div>
-                <h3>不知道买什么域名？这几家最便宜</h3>
+                <h3>域名选购指南：最便宜的几家</h3>
                 <p>域名选购指南，从坑到省钱技巧，新手必看。</p>
             </div>
         </div>
@@ -438,15 +671,25 @@
 <section id="cta">
     <div class="container">
         <div class="cta-block">
-            <h2>🚀 你的第一个网站</h2>
-            <p>不需要等准备好再开始。今晚就能上线一个能访问的网站。</p>
-            <a href="#tutorial" class="btn-primary">从第一步开始 →</a>
+            <h2>🚀 今晚就上线你的第一个网站</h2>
+            <p>不需要等准备好再开始。现在就能上线一个能访问的网站。</p>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+                <a href="#build" class="btn-primary">从建站开始 →</a>
+                <a href="#openclaw" class="btn-green">🎁 免费部署教程</a>
+            </div>
         </div>
     </div>
 </section>
 
 <footer>
-    <p>© 2026 SiteForge · 用AI建站，从这里开始</p>
+    <div class="footer-links">
+        <a href="#build">建站教程</a>
+        <a href="#openclaw">部署OpenClaw</a>
+        <a href="#tools">AI工具</a>
+        <a href="#pricing">定价</a>
+        <a href="#blog">博客</a>
+    </div>
+    <p>© 2026 AI工具箱 · 用AI帮你赚钱</p>
 </footer>
 
 <!-- Parallax Scroll JS -->
@@ -468,6 +711,14 @@
             }
         });
     })();
+
+    /* Platform Tabs */
+    function switchPlatform(name) {
+        document.querySelectorAll('.platform-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.platform-tab').forEach(el => el.classList.remove('active'));
+        document.getElementById('platform-' + name).classList.add('active');
+        document.querySelector('.platform-tab[onclick*="' + name + '"]').classList.add('active');
+    }
 </script>
 
 </body>
