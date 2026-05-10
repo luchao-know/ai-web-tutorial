@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>免费AI生图 - AI魔法工坊</title>
-<meta name="description" content="免费在线AI图片生成器，输入描述文字即可生成高清图片。无需API Key，无需注册，打开即用。" />
+<title>在线AI工具 - 灵境建站</title>
+<meta name="description" content="免费在线AI工具：AI生图、AI文案。为建站客户提供的免费附加工具。" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -18,24 +18,24 @@
 
 <nav>
   <div class="w">
-    <a href="index.html" class="logo">⚡ <span class="hl">AI魔法工坊</span></a>
+    <a href="index.html" class="logo">🏗️ <span class="hl">灵境建站</span></a>
     <button class="menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
     <div class="nav-links">
       <a href="index.html">🏠 首页</a>
-      <a href="tools.html">🎨 AI生图</a>
-      <a href="pricing.html">💎 定价</a>
-      <a href="deploy.html">📖 教程</a>
-      <a href="blog.html">📝 博客</a>
-      <a href="tools.html" class="nav-cta">免费生图</a>
+      <a href="services.html">💼 建站服务</a>
+      <a href="pricing.html">💎 报价</a>
+      <a href="tutorial.html">📖 OpenClaw教程</a>
+      <a href="tools.html">🔧 在线工具</a>
+      <a href="contact.html" class="nav-cta">立即咨询</a>
     </div>
   </div>
 </nav>
 
 <div class="page-header">
   <div class="w">
-    <span class="section-tag">🎨 免费工具</span>
-    <h1 class="page-title">AI 图片生成器</h1>
-    <p class="page-sub">输入描述文字，AI 立刻生成图片。支持中文，完全免费，无需注册。</p>
+    <span class="section-tag">🔧 在线工具</span>
+    <h1 class="page-title">免费 AI 工具箱</h1>
+    <p class="page-sub">建站客户免费使用。AI 生图、AI 文案，帮你快速完成内容创作。</p>
   </div>
 </div>
 
@@ -43,47 +43,47 @@
   <div class="w">
 
     <!-- 生图工具 -->
-    <div class="tool-section" id="sheng-tu">
-      <h3>🎨 AI 生图 <span class="badge">免费 · 无需API Key</span></h3>
+    <div class="tool-section" style="margin-bottom:40px;" id="sheng-tu">
+      <h3 style="display:flex;align-items:center;gap:8px;font-size:1.15rem;margin-bottom:16px;">
+        🎨 AI 生图 <span style="border-radius:20px;padding:2px 10px;font-size:.7rem;font-weight:500;background:rgba(52,211,153,.12);color:var(--green);">免费</span>
+      </h3>
       <div class="card">
         <div class="gen-area">
           <div>
             <div class="gen-box">
-              <label for="prompt">描述你想要的画面</label>
-              <textarea id="prompt" placeholder="例如：一只可爱的柴犬在樱花树下，阳光明媚，写实风格">一只可爱的柴犬在樱花树下，阳光明媚</textarea>
+              <label for="prompt">✏️ 描述你想要的画面</label>
+              <textarea id="prompt" placeholder="例如：一只可爱的柴犬在樱花树下，日系动漫风格">一只可爱的柴犬在樱花树下，阳光明媚</textarea>
             </div>
             <div style="margin-top:14px;">
-              <label style="display:block;font-size:.88rem;font-weight:500;margin-bottom:6px;">选择风格</label>
+              <label style="display:block;font-size:.88rem;font-weight:500;margin-bottom:6px;">🎭 选择风格</label>
               <div class="style-options" id="styleOptions">
-                <button data-style="写实" class="active">📷 写实</button>
-                <button data-style="二次元">🎨 二次元</button>
-                <button data-style="水彩">🎨 水彩</button>
+                <button data-style="" class="active">🔄 无指定</button>
+                <button data-style="写实,摄影">📷 写实</button>
+                <button data-style="动漫,二次元">🎨 二次元</button>
+                <button data-style="水彩画">🎨 水彩</button>
                 <button data-style="油画">🖼️ 油画</button>
-                <button data-style="像素">🟦 像素</button>
-                <button data-style="3D渲染">🧊 3D渲染</button>
-                <button data-style="赛博朋克">🌃 赛博朋克</button>
-                <button data-style="极简">◻️ 极简</button>
+                <button data-style="赛博朋克,霓虹灯">🌃 赛博朋克</button>
               </div>
             </div>
             <div style="display:flex;gap:12px;margin-top:14px;">
-              <select id="genSize" style="padding:10px 14px;background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-sm);color:var(--txt);font-size:.88rem;outline:none;">
+              <select id="genSize" style="padding:10px 14px;background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-sm);color:var(--txt);font-size:.88rem;outline:none;flex:1;">
                 <option value="1024">1024×1024 方形</option>
                 <option value="1024x768">1024×768 横屏</option>
                 <option value="768x1024">768×1024 竖屏</option>
               </select>
-              <button id="genBtn" class="btn btn-primary" style="flex:1;" onclick="generateImage()">✨ 生成图片</button>
+              <button id="genBtn" class="btn btn-primary" onclick="generateImage()">✨ 生成图片</button>
             </div>
             <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
-              <button class="btn btn-sm btn-outline" onclick="document.getElementById('prompt').value='一只穿着宇航服的猫在月球上奔跑，背景是地球升起'">🚀 宇航员猫</button>
-              <button class="btn btn-sm btn-outline" onclick="document.getElementById('prompt').value='夕阳下的海边，粉色紫色的晚霞，海浪拍打礁石'">🌅 夕阳海边</button>
-              <button class="btn btn-sm btn-outline" onclick="document.getElementById('prompt').value='赛博朋克风格的未来城市，霓虹灯，下雨的街道，细节丰富'">🌃 赛博朋克</button>
+              <button class="btn btn-sm btn-outline" onclick="fillPrompt('一只穿着宇航服的猫在月球上奔跑，背景是蓝色的地球')">🚀 太空猫</button>
+              <button class="btn btn-sm btn-outline" onclick="fillPrompt('夕阳下的海边，紫色晚霞，海浪拍打礁石')">🌅 夕阳海</button>
+              <button class="btn btn-sm btn-outline" onclick="fillPrompt('赛博朋克未来城市，霓虹灯雨夜，细节丰富')">🌃 赛博城</button>
             </div>
           </div>
           <div>
             <div class="gen-result" id="genResult">
               <div class="placeholder">
                 <span class="big-ico">🎨</span>
-                <span>输入描述文字<br/>点击"生成图片"按钮</span>
+                <span>输入描述，点击生成<br/>AI 为你绘制图片</span>
               </div>
             </div>
           </div>
@@ -91,31 +91,28 @@
       </div>
     </div>
 
-    <!-- 生视频 -->
-    <div class="tool-section" id="sheng-shipin">
-      <h3>🎬 AI 生视频 <span class="badge">即将上线</span></h3>
-      <div class="card" style="text-align:center;padding:60px 24px;">
-        <div style="font-size:3rem;margin-bottom:16px;">🚧</div>
-        <h3 style="font-size:1.1rem;margin-bottom:8px;">AI 视频生成即将上线</h3>
-        <p style="color:var(--muted);font-size:.9rem;">功能开发中，敬请期待...</p>
-      </div>
-    </div>
-
-    <!-- 文案 -->
+    <!-- 文案工具 -->
     <div class="tool-section" id="wen-an">
-      <h3>✍️ AI 文案</h3>
+      <h3 style="display:flex;align-items:center;gap:8px;font-size:1.15rem;margin-bottom:16px;">
+        ✍️ AI 文案 <span style="border-radius:20px;padding:2px 10px;font-size:.7rem;font-weight:500;background:rgba(52,211,153,.12);color:var(--green);">免费</span>
+      </h3>
       <div class="card">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="gen-area">
           <div>
-            <label style="display:block;font-size:.88rem;font-weight:500;margin-bottom:6px;">写什么内容？</label>
-            <textarea id="wenAnInput" placeholder="例如：帮我写一段小红书的旅游攻略文案" style="width:100%;padding:12px 16px;background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-sm);color:var(--txt);font-size:.92rem;resize:vertical;min-height:100px;outline:none;"></textarea>
-            <button class="btn btn-primary" style="margin-top:10px;width:100%;" onclick="generateWenAn()">✍️ 生成文案</button>
+            <div class="gen-box">
+              <label for="wenAnInput">✏️ 输入文案主题或要求</label>
+              <textarea id="wenAnInput" placeholder="例如：帮我写一段小红书的旅游攻略文案，目的地是云南大理">帮我写一段小红书的旅游攻略文案，目的地是云南大理</textarea>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+              <button class="btn btn-sm btn-outline" onclick="fillAn('帮我写一个产品介绍文案，产品是AI在线生图工具')">📦 产品介绍</button>
+              <button class="btn btn-sm btn-outline" onclick="fillAn('帮我写一篇SEO文章，主题是「如何用AI建网站」')">📝 SEO文章</button>
+              <button class="btn btn-sm btn-outline" onclick="fillAn('帮我写一段小程序推广文案，目标用户是不懂代码的人')">📢 推广文案</button>
+            </div>
+            <button class="btn btn-primary btn-block" style="margin-top:12px;" onclick="generateWenAn()">✍️ 生成文案</button>
           </div>
           <div>
-            <label style="display:block;font-size:.88rem;font-weight:500;margin-bottom:6px;">生成结果</label>
-            <div id="wenAnResult" style="background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-sm);padding:16px;min-height:100px;font-size:.9rem;color:var(--muted);line-height:1.8;">
-              点击"生成文案"查看结果...
-            </div>
+            <label style="display:block;font-size:.88rem;font-weight:500;margin-bottom:6px;">📄 生成结果（可复制）</label>
+            <div id="wenAnResult" style="background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-sm);padding:16px;min-height:160px;font-size:.88rem;color:var(--muted);line-height:1.8;white-space:pre-wrap;user-select:text;" onclick="selectText(this)">输入主题后点击"生成文案"</div>
           </div>
         </div>
       </div>
@@ -128,17 +125,17 @@
   <div class="w">
     <div class="fl">
       <a href="index.html">首页</a>
-      <a href="tools.html">AI生图</a>
-      <a href="pricing.html">定价</a>
-      <a href="deploy.html">教程</a>
-      <a href="blog.html">博客</a>
+      <a href="services.html">建站服务</a>
+      <a href="pricing.html">报价</a>
+      <a href="tutorial.html">OpenClaw教程</a>
+      <a href="tools.html">在线工具</a>
+      <a href="contact.html">联系我</a>
     </div>
-    <p>© 2026 AI魔法工坊 · 免费在线 AI 图片生成器</p>
+    <p>© 2026 灵境建站 · 免费在线 AI 工具</p>
   </div>
 </footer>
 
 <div id="toast" class="toast"></div>
-
 <script src="app.js"></script>
 </body>
 </html>

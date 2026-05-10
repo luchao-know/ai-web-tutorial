@@ -1,63 +1,70 @@
-/* ===== AI魔法工坊 v2.0 - JavaScript ===== */
-(function(){
+/* ===== 灵境建站 v2.0 - JavaScript ===== */
 
-// ===== Loader =====
+// ===== Page Loader =====
+(function(){
   const overlay = document.createElement('div');
   overlay.id = 'pageLoader';
-  overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:var(--bg,#0c0c14);display:flex;align-items:center;justify-content:center;transition:opacity .5s;opacity:0;pointer-events:none';
-  overlay.innerHTML = '<div style="width:36px;height:36px;border:3px solid rgba(255,255,255,.05);border-top-color:#a855f7;border-radius:50%;animation:spin .8s linear infinite"></div><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#0a0a12;display:flex;align-items:center;justify-content:center;transition:opacity .4s;opacity:0;pointer-events:none';
+  overlay.innerHTML = '<div style="width:30px;height:30px;border:3px solid rgba(255,255,255,.05);border-top-color:#6366f1;border-radius:50%;animation:loaderSpin .8s linear infinite"></div><style>@keyframes loaderSpin{to{transform:rotate(360deg)}}</style>';
   document.body.appendChild(overlay);
   requestAnimationFrame(() => overlay.style.opacity = '1');
-  window.addEventListener('load',() => {
-    setTimeout(() => {
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(),500);
-    },300);
+  window.addEventListener('load', () => {
+    setTimeout(() => { overlay.style.opacity = '0'; setTimeout(() => overlay.remove(), 400); }, 200);
   });
-  document.addEventListener('click',e => {
+  document.addEventListener('click', e => {
     const link = e.target.closest('a[href]');
-    if(!link) return;
+    if (!link) return;
     const h = link.getAttribute('href');
-    if(!h || h.startsWith('#') || h.startsWith('javascript:') || h.startsWith('http://') || h.startsWith('https://')) return;
-    if(h.endsWith('.html')) {
+    if (!h || h.startsWith('#') || h.startsWith('javascript:') || h.startsWith('http://') || h.startsWith('https://')) return;
+    if (h.endsWith('.html')) {
       e.preventDefault();
       overlay.style.opacity = '1';
-      setTimeout(() => window.location.href = h, 300);
+      setTimeout(() => window.location.href = h, 250);
     }
   });
 })();
 
 // ===== Toast =====
-function showToast(msg, duration){
+function showToast(msg, duration) {
   const t = document.getElementById('toast');
-  if(!t) return;
+  if (!t) return;
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(t._hide);
   t._hide = setTimeout(() => t.classList.remove('show'), duration || 3000);
 }
 
-// ===== Style Picker (tools page) =====
+// ===== Style Picker =====
 (function(){
   const container = document.getElementById('styleOptions');
-  if(!container) return;
-  container.addEventListener('click',e => {
+  if (!container) return;
+  container.addEventListener('click', e => {
     const btn = e.target.closest('button');
-    if(!btn) return;
+    if (!btn) return;
     container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   });
 })();
 
+// ===== Fill prompt helpers =====
+function fillPrompt(text) {
+  const el = document.getElementById('prompt');
+  if (el) { el.value = text; el.focus(); }
+}
+function fillAn(text) {
+  const el = document.getElementById('wenAnInput');
+  if (el) { el.value = text; el.focus(); }
+}
+
 // ===== Generate Image =====
-async function generateImage(){
+async function generateImage() {
   const prompt = document.getElementById('prompt');
   const result = document.getElementById('genResult');
   const btn = document.getElementById('genBtn');
-  if(!prompt || !result || !btn) return;
 
+  if (!prompt || !result || !btn) return;
   const text = prompt.value.trim();
-  if(!text){
+  if (!text) {
     showToast('⚠️ 请输入图片描述');
     prompt.focus();
     prompt.style.borderColor = '#ef4444';
@@ -67,44 +74,47 @@ async function generateImage(){
 
   // Get style
   const styleBtn = document.querySelector('#styleOptions .active');
-  const style = styleBtn ? styleBtn.dataset.style : '写实';
+  const style = styleBtn ? styleBtn.dataset.style : '';
 
   // Get size
   const sizeSel = document.getElementById('genSize');
   const size = sizeSel ? sizeSel.value : '1024';
-
-  // Build prompt with style
-  const fullPrompt = style ? `${text}, ${style}风格, 高画质, 细节丰富` : `${text}, 高画质, 细节丰富`;
-
-  // Determine dimensions
   let w = 1024, h = 1024;
-  if(size === '1024x768'){ w = 1024; h = 768; }
-  else if(size === '768x1024'){ w = 768; h = 1024; }
+  if (size === '1024x768') { w = 1024; h = 768; }
+  else if (size === '768x1024') { w = 768; h = 1024; }
 
-  // Show loading
+  // Build prompt
+  const fullPrompt = style ? `${text}, ${style}, 高质量, 细节丰富` : `${text}, 高质量, 细节丰富`;
+
+  // Loading state
   btn.textContent = '⏳ 生成中...';
   btn.disabled = true;
-  result.innerHTML = `<div class="loading"><div class="spinner"></div><span>🎨 AI 正在绘制 "${text.slice(0,20)}..."</span></div>`;
+  result.innerHTML = `<div class="loading"><div class="spinner"></div><span>🎨 AI 正在绘制...</span></div>`;
 
   try {
-    // Use Pollinations.ai free API
+    // Pollinations.ai free API
     const encoded = encodeURIComponent(fullPrompt);
-    const imageUrl = `https://image.pollinations.ai/prompt/${encoded}?width=${w}&height=${h}&nologo=true&seed=${Math.floor(Math.random()*999999)}`;
+    const seed = Math.floor(Math.random() * 999999);
+    const imageUrl = `https://image.pollinations.ai/prompt/${encoded}?width=${w}&height=${h}&nologo=true&seed=${seed}`;
 
-    // Preload image
+    // Load image
     const img = new Image();
-    img.style.cssText = 'width:100%;height:100%;object-fit:contain;border-radius:var(--radius);cursor:pointer;';
+    img.style.cssText = 'width:100%;height:auto;max-height:400px;object-fit:contain;cursor:pointer;display:block;';
 
+    // Wait for image to load (Pollinations generates on first request)
     await new Promise((resolve, reject) => {
       img.onload = resolve;
       img.onerror = () => {
-        // If Pollinations fails, try the image URL directly (it's a GET that returns the image)
-        // Fallback: just use the URL as src
-        resolve();
+        // Retry once with different seed
+        const retryUrl = `https://image.pollinations.ai/prompt/${encoded}?width=${w}&height=${h}&nologo=true&seed=${seed+1}`;
+        const retryImg = new Image();
+        retryImg.onload = () => { img.src = retryUrl; resolve(); };
+        retryImg.onerror = resolve; // Give up, show broken image
+        retryImg.src = retryUrl;
       };
       img.src = imageUrl;
       // Safety timeout
-      setTimeout(resolve, 15000);
+      setTimeout(resolve, 20000);
     });
 
     // Display result
@@ -120,21 +130,17 @@ async function generateImage(){
       showToast('✅ 图片已保存');
     });
 
-    // Add download hint
+    // Download hint
     const hint = document.createElement('div');
-    hint.style.cssText = 'position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.6);color:#fff;padding:4px 12px;border-radius:8px;font-size:.75rem;pointer-events:none;z-index:1;';
-    hint.textContent = '点击下载';
+    hint.style.cssText = 'position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.5);color:#fff;padding:4px 12px;border-radius:8px;font-size:.72rem;pointer-events:none;z-index:1;';
+    hint.textContent = '👆 点击下载';
     result.style.position = 'relative';
     result.appendChild(hint);
-    setTimeout(() => hint.style.opacity = '.5', 3000);
 
-    showToast('✅ 图片生成完成！');
+    showToast('✅ 图片生成完成！点击图片可下载');
 
-    // Try to generate a second preview image (sometimes the first request is still being generated)
-    // The Pollinations API generates on first request, so we just show it.
-
-  } catch(err) {
-    result.innerHTML = `<div class="placeholder"><span class="big-ico">❌</span><span>生成失败，请重试<br/><span style="font-size:.78rem;color:var(--muted)">${err.message}</span></span></div>`;
+  } catch (err) {
+    result.innerHTML = `<div class="placeholder"><span class="big-ico">❌</span><span>生成失败<br/><span style="font-size:.78rem;color:var(--muted)">网络问题或该描述无法生成，换个描述试试</span></span></div>`;
     showToast('❌ 生成失败，请重试');
   }
 
@@ -142,70 +148,78 @@ async function generateImage(){
   btn.disabled = false;
 }
 
-// ===== Generate WenAn (文案) =====
-const wenAnTemplates = {
-  '小红书': '🏆 **标题：**[主题]必看的5个秘诀\n\n哈喽姐妹们！今天来跟大家分享关于[主题]的干货～\n\n✨ 为什么我推荐你一定要试试？\n1. 第一个原因是...\n2. 第二个原因是...\n\n💡 小贴士：\n- 记得先做...\n- 搭配...效果更好\n\n📌 收藏起来慢慢看，下次用得上！\n\n#AI工具 #效率提升 #干货分享',
-  '产品介绍': '## [产品名称]\n\n### 核心功能\n- 功能一：[描述]\n- 功能二：[描述]\n- 功能三：[描述]\n\n### 适用场景\n> [场景描述]\n\n### 定价\n基础版：免费  |  专业版：¥29/月\n\n👉 [立即体验]',
-  'SEO文章': '# [关键词]完整指南（2026）\n\n## 什么是[关键词]\n\n[关键词]是...近年来受到越来越多关注。\n\n## 为什么[关键词]很重要\n\n1. 提升效率\n2. 降低成本\n3. 改善体验\n\n## 如何开始使用[关键词]\n\n第一步：...\n第二步：...\n第三步：...\n\n## 总结\n\n[关键词]正在改变...建议尽早了解和使用。\n\n---\n*本文由AI辅助生成*',
-  '默认': '📝 你的文案将在这里显示...\n\n这是由AI生成的示例文案。\n\n---\n*输入你想要的内容主题，点击生成即可*'
-};
-
-function generateWenAn(){
+// ===== Generate WenAn =====
+function generateWenAn() {
   const input = document.getElementById('wenAnInput');
   const result = document.getElementById('wenAnResult');
-  if(!input || !result) return;
+  if (!input || !result) return;
 
   const text = input.value.trim();
-  if(!text){
+  if (!text) {
     showToast('⚠️ 请输入文案主题');
     input.focus();
     return;
   }
 
-  // Pick a random template
-  const keys = Object.keys(wenAnTemplates);
-  const template = wenAnTemplates[keys[Math.floor(Math.random() * keys.length)]];
+  // Generate mock content based on input keywords
+  const lower = text.toLowerCase();
+  let output = '';
 
-  // Replace placeholders with user input
-  let output = template
-    .replace(/\[主题\]/g, text)
-    .replace(/\[关键词\]/g, text)
-    .replace(/\[产品名称\]/g, text)
-    .replace(/\[描述\]/g, '高效便捷，一键生成')
-    .replace(/\[场景描述\]/g, `适用于${text}相关场景`);
+  if (text.includes('小红书') || text.includes('攻略')) {
+    output = `🏆 **标题：${text.replace(/^(帮我写|写|生成|一段|一个)/, '').trim()}**\n\n哈喽姐妹们！今天来给大家分享一篇超实用的内容～\n\n✨ 为什么你一定要看？\n\n1️⃣ 这是我自己亲测有效的方法\n2️⃣ 零成本，有手就能做\n3️⃣ 坚持一周就能看到变化\n\n💡 小贴士：\n- 建议收藏起来慢慢看\n- 有什么问题评论区问我～\n\n📌 记得点赞+收藏，下次用得上！\n\n#干货分享 #生活小技巧 #实用推荐`;
+  } else if (text.includes('产品') || text.includes('介绍')) {
+    output = `# 📦 产品介绍：${text.replace(/^(帮我写|写|生成|一段|一个|产品介绍)/, '').trim()}\n\n## 核心亮点\n\n✨ **为什么选择我们？**\n\n✅ 简单易用 —— 不需要任何技术基础\n✅ 高效快捷 —— 节省 90% 的时间\n✅ 性价比高 —— 用得起的价格\n\n## 适用人群\n\n> 适合所有想要提升效率的个人和团队\n\n## 现在就开始\n\n📞 联系我们，了解更多\n\n---\n*让技术为每个人服务*`;
+  } else if (text.includes('SEO') || text.includes('文章')) {
+    output = `# 📝 ${text.replace(/^(帮我写|写|生成|一篇|一个|SEO文章)/, '').trim()} 完整指南\n\n## 为什么这很重要？\n\n在当今时代，掌握这个技能可以帮你：\n- 提升效率\n- 节省成本\n- 获得更多机会\n\n## 如何开始？\n\n### 第一步：了解基础\n...\n\n### 第二步：动手实践\n...\n\n### 第三步：持续优化\n...\n\n## 总结\n\n尽早开始，持续学习，你也能做到。\n\n---\n*本文由 AI 辅助生成，仅供参考*`;
+  } else {
+    output = `${text}\n\n${text}是一个很有价值的主题。以下是一些关键要点：\n\n1️⃣ 首先，了解其基本概念和应用场景\n2️⃣ 其次，掌握核心方法和技巧\n3️⃣ 最后，通过实践不断提升\n\n💡 建议从简单的开始，循序渐进。\n\n欢迎联系我们获取更多帮助！`;
+  }
 
-  result.innerHTML = `<div style="white-space:pre-wrap;line-height:1.8;font-size:.9rem;">${output}</div>`;
-  showToast('✅ 文案生成完成！复制即可使用');
+  result.textContent = '';
+  result.innerText = output;
+  showToast('✅ 文案生成完成！点击结果区域可全选复制');
 }
 
-// ===== Exports for inline onclick =====
+// ===== Select text helper =====
+function selectText(el) {
+  if (!el) return;
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  showToast('✅ 已选中，按 Ctrl+C / Cmd+C 复制');
+}
+
+// ===== Contact form =====
+function submitContact(e) {
+  e.preventDefault();
+  const name = document.getElementById('cName').value.trim();
+  const contact = document.getElementById('cContact').value.trim();
+  const type = document.getElementById('cType').value;
+  const desc = document.getElementById('cDesc').value.trim();
+
+  if (!name || !contact || !desc) {
+    showToast('⚠️ 请填写完整信息');
+    return;
+  }
+
+  // For now, compose a message and show toast
+  const msg = `📩 需求已收到！\n\n称呼：${name}\n联系方式：${contact}\n网站类型：${type}\n需求：${desc.substring(0, 50)}${desc.length > 50 ? '...' : ''}\n\n我会在 24 小时内联系你！`;
+
+  showToast('✅ ' + '需求已提交！我会在 24h 内联系你', 4000);
+  document.querySelector('.contact-form').reset();
+}
+
+// ===== Exports =====
 window.generateImage = generateImage;
 window.generateWenAn = generateWenAn;
+window.fillPrompt = fillPrompt;
+window.fillAn = fillAn;
+window.selectText = selectText;
+window.submitContact = submitContact;
 window.showToast = showToast;
 
-// ===== Magic counter animation (tools page) =====
-(function(){
-  var countEl = document.getElementById('magicCount');
-  var barEl = document.getElementById('magicBar');
-  if(!countEl) return;
-  var used = 86, total = 200;
-  function tick(){
-    if(used < total){
-      used += 1;
-      countEl.textContent = total - used;
-      if(barEl) barEl.style.width = ((used / total) * 100) + '%';
-      setTimeout(tick, 3000 + Math.random() * 4000);
-    }
-  }
-  setTimeout(tick, 3000);
-  var daysEl = document.getElementById('resetDays');
-  if(daysEl){
-    var d = 18;
-    setInterval(function(){ d = d <= 1 ? 30 : d - 1; daysEl.textContent = d; }, 60000);
-  }
-})();
-
-// ===== Console greeting =====
-console.log('%c⚡ AI魔法工坊 v2.0', 'font-size:24px;font-weight:bold;color:#a855f7');
-console.log('%c🎨 免费在线 AI 图片生成器', 'font-size:14px;color:#7c7c8a');
-console.log('%c💡 提示: 按 F12 → Application → 查看所有页面资源', 'font-size:12px;color:#6b7280');
+// ===== Console =====
+console.log('%c🏗️ 灵境建站 v2.0', 'font-size:22px;font-weight:bold;color:#6366f1');
+console.log('%c用 AI 帮不懂代码的人建网站', 'font-size:13px;color:#7c7c8a');
