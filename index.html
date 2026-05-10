@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI魔法工坊 - 用AI建站·生图·赚钱</title>
-<meta name="description" content="AI工具平台，魔法消耗制。AI生图、AI生视频、AI建站，全部消耗魔法点。月卡Pro $6.99起。" />
+<title>AI魔法工坊 - 免费在线AI生图·AI建站·AI文案</title>
+<meta name="description" content="AI魔法工坊：免费在线AI图片生成器，无需API Key，输入描述即可生成高清图片。还有AI建站、AI文案工具，全部免费使用。" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -16,122 +16,186 @@
   <div class="orb"></div>
 </div>
 
-<!-- ===== 顶部导航 ===== -->
+<!-- ===== Nav ===== -->
 <nav>
   <div class="w">
-    <a href="index.html" class="logo">✨ <span class="hl">AI魔法工坊</span></a>
+    <a href="index.html" class="logo">⚡ <span class="hl">AI魔法工坊</span></a>
     <button class="menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
     <div class="nav-links">
-      <a href="tools.html">✨ 魔法工具</a>
+      <a href="index.html">🏠 首页</a>
+      <a href="tools.html">🎨 AI生图</a>
       <a href="pricing.html">💎 定价</a>
-      <a href="deploy.html">🎁 免费部署</a>
+      <a href="deploy.html">📖 教程</a>
       <a href="blog.html">📝 博客</a>
-      <a href="pricing.html" class="nav-cta">开通月卡</a>
+      <a href="tools.html" class="nav-cta">免费生图</a>
     </div>
   </div>
 </nav>
 
-<!-- ===== 首页主视觉 ===== -->
+<!-- ===== Hero ===== -->
 <section class="hero">
-  <div class="w" style="text-align:center;">
-    <h1>用 <span class="hl">AI 魔法</span> 建站 · 生图 · 赚钱</h1>
+  <div class="w">
+    <div style="margin-bottom:20px;font-size:3rem;">⚡</div>
+    <h1>用 <span class="hl">AI</span> 生成图片<br/>不懂代码也能用</h1>
     <p class="hero-p">
-      不懂代码？没关系。<br />
-      全部消耗 <strong style="color:#f59e0b;">✨ 魔法点</strong>，开月卡送魔法，用完等下月。<br />
-      丰俭由人，够用就好。
+      完全免费的在线 AI 图片生成器。<br/>
+      输入描述文字，AI 立刻为你生成高清图片。<strong>无需API Key</strong>，<strong>无需注册</strong>，打开即用。
     </p>
     <div class="hero-btns">
-      <a href="tools.html" class="btn btn-primary">✨ 去使用魔法工具</a>
-      <a href="deploy.html" class="btn btn-green">🎁 免费部署教程</a>
+      <a href="tools.html" class="btn btn-primary">🎨 开始生图</a>
+      <a href="deploy.html" class="btn btn-green">📖 免费部署教程</a>
       <a href="pricing.html" class="btn btn-outline">💎 查看定价</a>
     </div>
     <div class="hero-stats">
-      <div><span class="n">200</span><span class="l">月卡魔法量</span></div>
-      <div><span class="n">$6.99</span><span class="l">月卡 Pro</span></div>
-      <div><span class="n">$9.88</span><span class="l">月卡 Pro Max</span></div>
-      <div><span class="n">$1.99</span><span class="l">单次建站</span></div>
+      <div><span class="n">免费</span><span class="l">无需API Key</span></div>
+      <div><span class="n">高清</span><span class="l">1024×1024</span></div>
+      <div><span class="n">秒级</span><span class="l">快速生成</span></div>
+      <div><span class="n">无限</span><span class="l">免费次数</span></div>
     </div>
   </div>
 </section>
 
-<!-- ===== 功能简介 ===== -->
-<section class="sec">
+<!-- ===== Features ===== -->
+<section class="sec" id="features">
   <div class="w">
-    <span class="tag tag-amber">✨ 四个核心功能</span>
-    <h2 class="sec-title">用魔法点，做你想做的事</h2>
-    <p class="sec-sub">每个功能都消耗魔法点。月卡够用，不够再补。</p>
+    <div style="text-align:center;">
+      <span class="section-tag">✨ 四大核心功能</span>
+      <h2 class="sec-title">一个平台，搞定你的需求</h2>
+      <p class="sec-sub" style="margin:0 auto 40px;">从图片到网站，从文案到视频，AI 一站式搞定</p>
+    </div>
     <div class="g-2">
       <a href="tools.html#sheng-tu" class="feat-card">
         <div class="ico">🎨</div>
-        <h3>AI 生图 <span style="color:#f59e0b;font-size:.75rem;">5✨/次</span></h3>
-        <p>输入文字，AI 自动生成精美图片。适合做封面、插图、产品图。</p>
-        <span class="feat-link">去生图 →</span>
+        <h3>AI 生图 <span class="cost">免费</span></h3>
+        <p>输入文字描述，AI 自动生成高质量图片。适合做封面、插图、产品图、社交媒体配图。</p>
+        <span class="feat-link">开始生图 →</span>
       </a>
       <a href="tools.html#sheng-shipin" class="feat-card">
         <div class="ico">🎬</div>
-        <h3>AI 生视频 <span style="color:#f59e0b;font-size:.75rem;">10✨/次</span></h3>
-        <p>文字/图片转视频，适合抖音、视频号、小红书短视频创作。</p>
-        <span class="feat-link">去生成 →</span>
+        <h3>AI 生视频 <span class="cost">即将上线</span></h3>
+        <p>文字转视频、图片转视频，适合抖音、视频号、小红书短视频创作。</p>
+        <span class="feat-link">了解更多 →</span>
       </a>
-      <a href="tools.html#jian-zhan" class="feat-card">
+      <a href="deploy.html" class="feat-card">
         <div class="ico">🌐</div>
-        <h3>AI 建站 <span style="color:#a855f7;font-size:.75rem;">30✨/次</span></h3>
-        <p>告诉 AI 你想要的网站，自动生成代码并部署上线。付费服务。</p>
-        <span class="feat-link">去建站 →</span>
+        <h3>AI 建站 <span class="cost">免费</span></h3>
+        <p>告诉 AI 你想要的网站，配合免费教程，零成本部署上线。不懂代码也能做。</p>
+        <span class="feat-link">查看教程 →</span>
       </a>
       <a href="tools.html#wen-an" class="feat-card">
         <div class="ico">✍️</div>
-        <h3>AI 文案 <span style="color:#f59e0b;font-size:.75rem;">3✨/篇</span></h3>
-        <p>SEO文章、产品介绍、推广文案。AI 帮你写，你只管发布。</p>
+        <h3>AI 文案 <span class="cost">免费</span></h3>
+        <p>SEO文章、产品介绍、推广文案、小红书笔记。AI 帮你写，你只管发布。</p>
         <span class="feat-link">去写作 →</span>
       </a>
     </div>
   </div>
 </section>
 
-<!-- ===== 快速上手 ===== -->
-<section class="sec" style="background:rgba(255,255,255,0.008);">
+<!-- ===== How It Works ===== -->
+<section class="sec sec-alt">
   <div class="w">
-    <span class="tag tag-purple">📖 新手友好</span>
-    <h2 class="sec-title">不懂代码？4步搞定网站</h2>
-    <p class="sec-sub">所有教程永久免费，跟着步骤走就行。</p>
+    <div style="text-align:center;">
+      <span class="section-tag gold">📖 三步上手</span>
+      <h2 class="sec-title">打开即用，三秒上手</h2>
+      <p class="sec-sub" style="margin:0 auto 40px;">不需要注册，不需要配置环境，更不需要编程基础</p>
+    </div>
     <div class="steps">
       <div class="step">
         <div class="num">1</div>
-        <div><h3>🎯 确定方向</h3><p>个人博客？产品展示？工具站？选一个你感兴趣的。</p></div>
+        <h3>✏️ 输入描述</h3>
+        <p>用中文描述你想要的画面，例如"一只可爱的柴犬在樱花树下"</p>
       </div>
       <div class="step">
         <div class="num">2</div>
-        <div><h3>🤖 AI 写代码</h3><p>把想法告诉 AI，它帮你生成完整的网站代码。</p></div>
+        <h3>⚡ 点击生成</h3>
+        <p>AI 在几秒内根据你的描述生成一张高清图片</p>
       </div>
       <div class="step">
         <div class="num">3</div>
-        <div><h3>📦 部署上线</h3><p>GitHub Pages / Vercel 免费托管，推送即上线。</p></div>
-      </div>
-      <div class="step">
-        <div class="num">4</div>
-        <div><h3>🌐 运营变现</h3><p>加域名 → 引流 → 卖产品/接广告。网站自己赚钱。</p></div>
+        <h3>💾 下载使用</h3>
+        <p>点击图片即可下载，用于你的文章、封面、社交媒体</p>
       </div>
     </div>
-    <div style="text-align:center;margin-top:20px;">
-      <a href="deploy.html" class="btn btn-green">🎁 看免费部署教程</a>
+    <div style="text-align:center;margin-top:32px;">
+      <a href="tools.html" class="btn btn-primary">🎨 去试试</a>
     </div>
   </div>
 </section>
 
-<!-- ===== 页脚 ===== -->
+<!-- ===== Pricing Preview ===== -->
+<section class="sec" id="pricing">
+  <div class="w">
+    <div style="text-align:center;">
+      <span class="section-tag green">💎 灵活定价</span>
+      <h2 class="sec-title">丰俭由人，按需选择</h2>
+      <p class="sec-sub" style="margin:0 auto 40px;">基础功能全部免费，进阶需求升级月卡</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="p-name">🆓 免费版</div>
+        <div class="p-sub">个人试用</div>
+        <div class="p-price">¥0 <span>/ 月</span></div>
+        <div class="p-desc">日常轻度使用</div>
+        <ul>
+          <li>AI 生图免费</li>
+          <li>标准分辨率</li>
+          <li>基础风格</li>
+          <li>无水印</li>
+          <li class="no">AI 生视频</li>
+          <li class="no">优先生成</li>
+        </ul>
+        <a href="tools.html" class="btn btn-outline btn-block">开始使用</a>
+      </div>
+      <div class="price-card featured">
+        <div class="p-name">⭐ Pro</div>
+        <div class="p-sub">个人进阶</div>
+        <div class="p-price">¥29 <span>/ 月</span></div>
+        <div class="p-desc">适合内容创作者</div>
+        <ul>
+          <li>AI 生图免费</li>
+          <li>高清分辨率</li>
+          <li>全部风格</li>
+          <li>无水印</li>
+          <li>AI 生视频 50次/月</li>
+          <li>优先生成</li>
+        </ul>
+        <a href="pricing.html" class="btn btn-primary btn-block">了解更多</a>
+      </div>
+      <div class="price-card">
+        <div class="p-name">🚀 Pro Max</div>
+        <div class="p-sub">团队/专业</div>
+        <div class="p-price">¥69 <span>/ 月</span></div>
+        <div class="p-desc">高强度使用</div>
+        <ul>
+          <li>AI 生图免费</li>
+          <li>超清 4K 分辨率</li>
+          <li>全部风格 + 自定义</li>
+          <li>无水印</li>
+          <li>AI 生视频 200次/月</li>
+          <li>优先生成 + API</li>
+        </ul>
+        <a href="pricing.html" class="btn btn-outline btn-block">了解更多</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
 <footer>
   <div class="w">
     <div class="fl">
       <a href="index.html">首页</a>
-      <a href="tools.html">魔法工具</a>
+      <a href="tools.html">AI生图</a>
       <a href="pricing.html">定价</a>
-      <a href="deploy.html">免费部署</a>
+      <a href="deploy.html">教程</a>
       <a href="blog.html">博客</a>
     </div>
-    <p>© 2026 AI魔法工坊 · 用AI帮你赚钱 · ✨ 魔法消耗制</p>
+    <p>© 2026 AI魔法工坊 · 免费在线 AI 图片生成器 · Powered by AI</p>
   </div>
 </footer>
+
+<div id="toast" class="toast"></div>
 
 <script src="app.js"></script>
 </body>
