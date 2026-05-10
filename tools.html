@@ -6,6 +6,15 @@
 <title>AI工具 - AI魔法工坊</title>
 <meta name="description" content="AI生图、AI视频、AI文案、AI建站，全部免费使用。消耗魔法点，开月卡更划算。" />
 <link rel="stylesheet" href="style.css" />
+<style>
+.builder-wrap{max-width:640px;margin:0 auto}
+.builder-opt{transition:.2s;cursor:pointer}
+.builder-opt.btn-primary{border-color:var(--purple);background:rgba(168,85,247,.15);color:var(--purple)}
+.builder-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.builder-header .bar{flex:1;height:4px;background:var(--surf3);border-radius:2px;overflow:hidden}
+.builder-header .bar .fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--blue));border-radius:2px;transition:width .4s ease}
+.builder-footer{display:flex;justify-content:space-between;margin-top:16px}
+</style>
 </head>
 <body>
 
@@ -34,31 +43,31 @@
   <div class="w">
     <span class="tag tag-purple">🎨 魔法工具</span>
     <h1 class="page-t">四个魔法工具，搞定你的需求</h1>
-    <p class="page-s">每个工具消耗魔法点。免费用户每天也有额度，开月卡无限用。</p>
+    <p class="page-s">每个工具消耗魔法点。魔法没用完的自动保留到下月，永久有效。开月卡送更多。</p>
   </div>
 </div>
 
 <section class="sec" style="padding-top:0;">
   <div class="w">
 
-    <!-- 魔法余额看板 -->
+    <!-- 魔法余额看板 — 静态，只有使用时才扣 -->
     <div class="magic-b">
       <div class="mb-h">
         <span style="font-weight:600;">✨ 我的魔法余额</span>
-        <span style="font-size:.8rem;color:var(--muted);">月卡 Pro</span>
+        <span style="font-size:.8rem;color:var(--muted);">月卡 Pro · 没用完保留到下月</span>
       </div>
       <div class="mb-bal"><span id="magicCount">200</span> <span class="mb-l">✨</span></div>
-      <div class="mb-bar"><div class="mb-f" id="magicBar" style="width:43%;"></div></div>
+      <div class="mb-bar"><div class="mb-f" id="magicBar" style="width:2%;"></div></div>
       <div class="mb-foot">
-        <span>已用 86 ✨</span>
-        <span>重置还有 <span id="resetDays">18</span> 天</span>
-        <span><a href="pricing.html" style="color:var(--gold);font-size:.82rem;">补魔 ↗</a></span>
+        <span>已用 <span id="magicUsed">0</span> ✨</span>
+        <span style="color:var(--green);">✅ 没用完的魔法保留到下月</span>
+        <span><a href="pricing.html" style="color:var(--gold);font-size:.82rem;">开通月卡 ↗</a></span>
       </div>
     </div>
 
     <!-- ===== 生图 ===== -->
     <div class="tool-sec" id="sheng-tu">
-      <h3>🎨 AI 生图 <span class="badge badge-free">5✨/次 · 免费</span></h3>
+      <h3>🎨 AI 生图 <span class="badge badge-free">5✨/次</span></h3>
       <div class="card">
         <div class="gen-area">
           <div>
@@ -96,7 +105,7 @@
             <div class="gen-result" id="genResult">
               <div class="placeholder">
                 <span class="ico">🎨</span>
-                <span>输入描述，点击生成<br/>AI 为你绘制图片</span>
+                <span>输入描述，点击生成<br/>首次生成约 5-20 秒，请耐心等待</span>
               </div>
             </div>
           </div>
@@ -118,27 +127,46 @@
     <!-- ===== 建站 ===== -->
     <div class="tool-sec" id="jian-zhan">
       <h3>🌐 AI 建站 <span class="badge badge-free">30✨/次 或 $1.99 单次</span></h3>
-      <div class="card" style="text-align:center;padding:40px 24px;">
-        <div style="font-size:3rem;margin-bottom:12px;">🏗️</div>
-        <h3 style="font-size:1.05rem;margin-bottom:6px;">告诉 AI 你想要什么网站</h3>
-        <p style="color:var(--muted);font-size:.85rem;max-width:500px;margin:0 auto 20px;">
-          个人博客、企业展示、营销落地页、工具导航站……<br/>
-          AI 自动生成代码并部署上线。不懂代码也能做。
-        </p>
-        <div class="gen-box" style="max-width:500px;margin:0 auto;">
-          <textarea id="sitePrompt" placeholder="例如：帮我做一个个人博客网站，深色主题，响应式设计" style="min-height:60px;"></textarea>
+
+      <!-- 初始状态 -->
+      <div id="builderStart">
+        <div class="card" style="text-align:center;padding:40px 24px;">
+          <div style="font-size:3rem;margin-bottom:12px;">🤖</div>
+          <h3 style="font-size:1.1rem;margin-bottom:8px;">AI 智能建站助手</h3>
+          <p style="color:var(--muted);font-size:.85rem;max-width:500px;margin:0 auto 20px;">
+            不知道怎么开始？让我来帮你。<br/>
+            AI 会一步步问你需求，推荐模板，生成方案。<br/>
+            全程智能引导，就像有一个建站专家在旁边。
+          </p>
+          <button class="btn btn-primary btn-lg" onclick="startBuilder()">🤖 开始与 AI 对话建站</button>
+          <div style="margin-top:12px;">
+            <a href="gallery.html" class="btn btn-outline">🏗️ 先看模板</a>
+          </div>
+          <div style="margin-top:16px;font-size:.78rem;color:var(--muted);">
+            ⚡ 建站消耗 30 魔法点 / $1.99 单次
+          </div>
         </div>
-        <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap;">
-          <button class="btn btn-primary" onclick="showToast('⚡ 建站功能即将上线！单次 $1.99 或消耗 30 魔法点')">⚡ 开始建站 (30✨)</button>
-          <a href="gallery.html" class="btn btn-outline">🏗️ 查看模板</a>
-          <a href="gallery.html" class="btn btn-green">📖 建站教程</a>
+      </div>
+
+      <!-- 建站向导 -->
+      <div id="builderWizard" style="display:none;">
+        <div class="card builder-wrap">
+          <div class="builder-header">
+            <span id="builderStepLabel" style="font-size:.8rem;color:var(--muted);white-space:nowrap;">步骤 1/7</span>
+            <div class="bar"><div class="fill" id="builderProgress" style="width:0%;"></div></div>
+          </div>
+          <div id="builderContent"></div>
+          <div class="builder-footer">
+            <button class="btn btn-sm btn-outline" id="builderBack" onclick="prevBuilderStep()" style="display:none;">← 上一步</button>
+            <span></span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- ===== 文案 ===== -->
     <div class="tool-sec" id="wen-an">
-      <h3>✍️ AI 文案 <span class="badge badge-free">3✨/篇 · 免费</span></h3>
+      <h3>✍️ AI 文案 <span class="badge badge-free">3✨/篇</span></h3>
       <div class="card">
         <div class="gen-area">
           <div>
@@ -150,8 +178,9 @@
               <button class="btn btn-sm btn-outline" onclick="fillWenAn('帮我写一个AI生图工具的产品介绍文案')">📦 产品介绍</button>
               <button class="btn btn-sm btn-outline" onclick="fillWenAn('帮我写一篇SEO文章：如何用AI建网站')">📝 SEO文章</button>
               <button class="btn btn-sm btn-outline" onclick="fillWenAn('帮我写一段小红书文案，推荐5个免费AI工具')">📱 小红书</button>
+              <button class="btn btn-sm btn-outline" onclick="fillWenAn('帮我写一份小红书的大理旅游攻略')">🗺️ 旅游攻略</button>
             </div>
-            <button class="btn btn-primary btn-block" style="margin-top:10px;" onclick="generateWenAn()">✍️ 消耗 3✨ 生成</button>
+            <button class="btn btn-primary btn-block" style="margin-top:10px;" onclick="generateWenAn()">✍️ 消耗 3✨ 生成文案</button>
           </div>
           <div>
             <label style="display:block;font-size:.86rem;font-weight:500;margin-bottom:5px;">📄 生成结果</label>
@@ -172,7 +201,7 @@
       <a href="gallery.html">建站模板</a>
       <a href="pricing.html">定价</a>
     </div>
-    <p>© 2026 AI魔法工坊 · 魔法消耗制 · $6.99 起</p>
+    <p>© 2026 AI魔法工坊 · 魔法消耗制 · 没用完的魔法自动保留到下月</p>
   </div>
 </footer>
 
